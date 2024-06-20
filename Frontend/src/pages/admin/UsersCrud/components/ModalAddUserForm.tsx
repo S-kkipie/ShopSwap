@@ -23,6 +23,7 @@ import {
 import {useAppSelector} from "@/store/hooks.ts";
 import {useRef} from "react";
 import {useToast} from "@/components/ui/use-toast.ts"
+const apiUrl = import.meta.env.BASE_URL;
 
 const formSchema = z.object({
     username: z.string().min(2, {
@@ -60,7 +61,7 @@ function AddUserForm({onUserAdded}: { onUserAdded: () => void }) {
     function onSubmit(values: z.infer<typeof formSchema>) {
 
         const fetchData = async () => {
-            const response = await fetch('http://localhost:8080/api/models/user/saveUser', {
+            const response = await fetch(apiUrl+ '/api/models/user/saveUser', {
                 method: 'POST',
                 body: JSON.stringify(values),
                 headers: {

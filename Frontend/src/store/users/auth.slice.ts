@@ -30,6 +30,7 @@ const initialState: AuthState = {
         role: tokenDecode(getCookie('accessToken')!).role,
         address: tokenDecode(getCookie('accessToken')!).address,
         status: tokenDecode(getCookie('accessToken')!).status,
+        password: "",
     } : null,
     accessToken: getCookie('accessToken') !== undefined ? getCookie('accessToken')! : null,
     isExpired: getCookie('accessToken') !== undefined ? expToken(getCookie('accessToken')!) : null,
