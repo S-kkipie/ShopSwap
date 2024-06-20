@@ -14,8 +14,6 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final JwtService jwtService;
     private final UserService userService;
 
     @PostMapping("/saveUser")
