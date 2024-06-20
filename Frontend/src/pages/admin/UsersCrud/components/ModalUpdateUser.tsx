@@ -17,6 +17,7 @@ import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/
 import {Input} from "@/components/ui/input.tsx";
 import {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select.tsx";
 import User from "@/Interfaces/User.ts";
+const apiUrl = import.meta.env.BASE_URL;
 
 
 const formSchema = z.object({
@@ -59,7 +60,7 @@ function UpdateUserForm({onUserUpdated, userToUpdate}: { onUserUpdated: () => vo
 
     function onSubmit(values: z.infer<typeof formSchema>) {
         const fetchData = async () => {
-            const response = await fetch('http://localhost:8080/api/models/user/update/' + userToUpdate.id, {
+            const response = await fetch( apiUrl+ '/api/models/user/update/' + userToUpdate.id, {
                 method: 'PUT',
                 body: JSON.stringify(values),
                 headers: {

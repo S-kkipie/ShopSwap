@@ -8,12 +8,13 @@ import {Button} from "@/components/ui/button.tsx";
 import {toast} from "@/components/ui/use-toast.ts";
 import {useAppSelector} from "@/store/hooks.ts";
 import {DialogClose} from "@radix-ui/react-dialog";
+const apiUrl = import.meta.env.BASE_URL;
 
 
 function ModalConfirmDelete({userId, userName, onUserDeleted }: { userId: number, userName: string, onUserDeleted: () => void}) {
     const {accessToken} = useAppSelector((state) => state.authReducer)
     const fetchDeleteUser = async () => {
-        const response = await fetch("http://localhost:8080/api/models/user/deactivate/" + userId, {
+        const response = await fetch(apiUrl+ "/api/models/user/deactivate/" + userId, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
