@@ -8,7 +8,7 @@ import {Button} from "@/components/ui/button.tsx";
 import {toast} from "@/components/ui/use-toast.ts";
 import {useAppSelector} from "@/store/hooks.ts";
 import {DialogClose} from "@radix-ui/react-dialog";
-const apiUrl = import.meta.env.BASE_URL;
+const apiUrl = import.meta.env.VITE_BASE_URL;
 
 
 function ModalConfirmDelete({userId, userName, onUserDeleted }: { userId: number, userName: string, onUserDeleted: () => void}) {

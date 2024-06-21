@@ -23,7 +23,7 @@ import {
 import {useAppSelector} from "@/store/hooks.ts";
 import {useRef} from "react";
 import {useToast} from "@/components/ui/use-toast.ts"
-const apiUrl = import.meta.env.BASE_URL;
+const apiUrl = import.meta.env.VITE_BASE_URL;
 
 const formSchema = z.object({
     username: z.string().min(2, {

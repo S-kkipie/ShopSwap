@@ -4,7 +4,7 @@ import {ModalAddUser} from "@/pages/admin/UsersCrud/components/ModalAddUserForm.
 import ModalConfirmDelete from "@/pages/admin/UsersCrud/components/ModalConfirmDelete.tsx";
 import ModalUpdateUser from "@/pages/admin/UsersCrud/components/ModalUpdateUser.tsx";
 import User from "@/Interfaces/User.ts";
-const apiUrl = import.meta.env.BASE_URL;
+const apiUrl = import.meta.env.VITE_BASE_URL;
 
 function CrudUsers() {
     const [refreshData, setRefreshData] = useState(false); // Nuevo estado
