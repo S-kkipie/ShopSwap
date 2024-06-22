@@ -30,15 +30,15 @@ public class UserService {
     public User updateUser(int id, User user, String token){
         Long adminId = jwtService.getUserIdFromToken(jwtService.getTokenFromHeader(token));
         User newDataUser = userRepository.findById(id).orElseThrow();
-        user.setUsername(user.getUsername());
-        if (!user.getPassword().equals(user.getPassword())) {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        newDataUser.setUsername(user.getUsername());
+        if (!newDataUser.getPassword().equals(user.getPassword())) {
+            newDataUser.setPassword(passwordEncoder.encode(user.getPassword()));
         }
-        user.setEmail(user.getEmail());
-        user.setUserModifiedId(adminId);
-        user.setAddress(user.getAddress());
-        user.setRole(user.getRole());
-        user.setStatus(user.isEnabled());
+        newDataUser.setEmail(user.getEmail());
+        newDataUser.setUserModifiedId(adminId);
+        newDataUser.setAddress(user.getAddress());
+        newDataUser.setRole(user.getRole());
+        newDataUser.setStatus(user.isEnabled());
         return userRepository.save(newDataUser);
     }
     public User deactivateUser(int id, String token){
