@@ -29,7 +29,7 @@ public class CategoriasService {
     }
     public Categorias updateCategorias(Long categoryId , Categorias categorias, String token) {
         Long adminId = jwtService.getUserIdFromToken(jwtService.getTokenFromHeader(token));
-        Categorias newDataCategory = categoriasRepo.findByCategoryId(categoryId).orElseThrow();
+        Categorias newDataCategory = categoriasRepo.findByCategoryID(categoryId).orElseThrow();
         categorias.setCategoryName(categorias.getCategoryName());
         newDataCategory.setCategoryName(categorias.getCategoryName());
         newDataCategory.setCategoryType(categorias.getCategoryType());

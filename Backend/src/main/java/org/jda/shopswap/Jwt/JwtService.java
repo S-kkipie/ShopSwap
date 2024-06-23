@@ -4,16 +4,19 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.jda.shopswap.models.user.User;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class JwtService {
@@ -27,6 +30,20 @@ public class JwtService {
         claims.put("role", user.getRole().name());
         claims.put("id", user.getId());
         return getToken(claims, user);
+    }
+
+    public String createToken(String email, Collection<? extends GrantedAuthority> authorities) {
+        String roles = authorities.stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(","));
+
+        return Jwts.builder()
+                .setSubject(email)
+                .claim("roles", roles)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // 10 horas de validez
+                .signWith(getKey(), SignatureAlgorithm.HS256)
+                .compact();
     }
 
     public String getToken(Map<String, Object> extraClaims, UserDetails user) {
