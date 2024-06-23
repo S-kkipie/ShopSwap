@@ -17,7 +17,7 @@ interface AuthState {
     accessToken: string | null;
     isExpired: boolean | null;
 }
-
+console.log(getCookie('accessToken') !== undefined ? getCookie('accessToken')! : null)
 const initialState: AuthState = {
     isAuth: getCookie('accessToken') !== undefined ? !expToken(getCookie('accessToken')!) : false,
     success: getCookie('accessToken') !== undefined,
@@ -35,6 +35,7 @@ const initialState: AuthState = {
     accessToken: getCookie('accessToken') !== undefined ? getCookie('accessToken')! : null,
     isExpired: getCookie('accessToken') !== undefined ? expToken(getCookie('accessToken')!) : null,
 }
+console.log(initialState)
 export const authSlice = createSlice({
     name: "auth",
     initialState,
