@@ -38,6 +38,7 @@ public class AuthService {
                 .email(request.getEmail())
                 .address(request.getAddress())
                 .role(Role.USER)
+                .status(true)
                 .build();
         userRepository.save(user);
         return AuthResponse.builder()
