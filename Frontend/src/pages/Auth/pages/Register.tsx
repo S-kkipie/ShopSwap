@@ -7,7 +7,7 @@ function Register() {
 
     return !isAuth ? (
         <div className="flex">
-            <div className="flex flex-col  w-5/12 rounded-r-3xl  h-screen bg-primary">
+            <div className=" hidden lg:flex  md:hidden flex-col  w-5/12 rounded-r-3xl  h-screen bg-primary">
                 <Link className="block w-full" to="/"><h1
                     className="text-3xl font-bold text-secondary m-8">ShopSwap</h1></Link>
                 <div className="flex-1 flex items-center justify-center">
@@ -19,8 +19,8 @@ function Register() {
                     <h1 className="text-3xl font-bold mb-8 text-center text-primary">Register</h1>
                     <RegisterForm/>
                     <p className="mt-8 ">
-                        <span>Don't have an account?</span> <Link className="text-primary font-bold"
-                                                                  to="/register">Register</Link>
+                        <span>You have an account?</span> <Link className="text-primary font-bold"
+                                                                  to="/login">Login</Link>
                     </p>
                 </div>
             </div>

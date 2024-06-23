@@ -63,7 +63,7 @@ export function LoginForm() {
                             <FormMessage/>
                         </FormItem>
                     )}/>
-                <Button type="submit">Submit</Button>
+                <Button type="submit">Login</Button>
             </form>
         </Form>
     )
