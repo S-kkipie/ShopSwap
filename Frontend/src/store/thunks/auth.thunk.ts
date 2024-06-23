@@ -1,11 +1,11 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-
+const apiUrl = import.meta.env.VITE_BASE_URL;
 export const loginThunk = createAsyncThunk(
     "auth/loginThunk",
     async (
         {username, password}: { username: string, password: string }, {rejectWithValue}) => {
         try {
-            const response = await fetch("http://localhost:8080/auth/login", {
+            const response = await fetch(apiUrl+ "/auth/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -25,6 +25,7 @@ export const loginThunk = createAsyncThunk(
                     role: data.role,
                     id: data.id,
                     status: data.status,
+                    password: "",
                 },
                 accessToken: data.token,
             }
@@ -44,7 +45,7 @@ export const registerThunk = createAsyncThunk(
             address: string
         }, {rejectWithValue}) => {
         try {
-            const authGenerate = await fetch("http://localhost:8080/auth/register", {
+            const authGenerate = await fetch(apiUrl+ "/auth/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -60,6 +61,7 @@ export const registerThunk = createAsyncThunk(
                     role: response.role,
                     id: response.id,
                     status: response.status,
+                    password: "",
                 },
                 accessToken: response.token,
             }

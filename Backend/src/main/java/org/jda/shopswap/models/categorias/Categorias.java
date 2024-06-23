@@ -2,8 +2,7 @@ package org.jda.shopswap.models.categorias;
 
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.jda.shopswap.models.productos.Productos;
 
 import java.time.LocalDateTime;
@@ -12,6 +11,9 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Categorias {
 
     @Id
@@ -20,6 +22,7 @@ public class Categorias {
 
     private String categoryName;
     private String categoryType;
+    private Long adminID;
     private LocalDateTime modified;
 
     @OneToMany(mappedBy = "categoria")

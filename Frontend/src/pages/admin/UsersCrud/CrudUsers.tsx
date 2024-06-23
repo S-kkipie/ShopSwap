@@ -4,13 +4,14 @@ import {ModalAddUser} from "@/pages/admin/UsersCrud/components/ModalAddUserForm.
 import ModalConfirmDelete from "@/pages/admin/UsersCrud/components/ModalConfirmDelete.tsx";
 import ModalUpdateUser from "@/pages/admin/UsersCrud/components/ModalUpdateUser.tsx";
 import User from "@/Interfaces/User.ts";
+const apiUrl = import.meta.env.VITE_BASE_URL;
 
 function CrudUsers() {
     const [refreshData, setRefreshData] = useState(false); // Nuevo estado
     const {userData, accessToken} = useAppSelector((state) => state.authReducer)
     const [fetchUsers, setFetchUsers] = useState<User[]>([])
     const fetchUsersData = async () => {
-        const response = await fetch("http://localhost:8080/api/models/user/all", {
+        const response = await fetch(apiUrl+ "/api/models/user/all", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
