@@ -60,7 +60,7 @@ function DropDownUser() {
         <DropdownMenuContent>
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator/>
-            <Link  to="/u/profile"><DropdownMenuItem className="cursor-pointer">Profile</DropdownMenuItem></Link>
+            <Link  to="/u/settings"><DropdownMenuItem className="cursor-pointer">Settings</DropdownMenuItem></Link>
             {userData!.role === "ADMIN" && <Link to="/u/admin/crud"><DropdownMenuItem>ShopSwap Admin</DropdownMenuItem></Link>}
             <DropdownMenuItem>Billing</DropdownMenuItem>
             <DropdownMenuItem>Team</DropdownMenuItem>

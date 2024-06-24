@@ -34,7 +34,7 @@ public class User implements UserDetails, OAuth2User {
     Role role;
     String provider;
     Boolean status;
-    URL picture;
+    String picture;
 
     @Override
     public Map<String, Object> getAttributes() {

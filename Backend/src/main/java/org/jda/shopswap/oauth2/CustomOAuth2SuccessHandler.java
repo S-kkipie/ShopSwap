@@ -28,6 +28,13 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, IOException {
         log.info("OAuth2 authentication success");
+        if (request.getCookies() != null) {
+            for (Cookie cookie : request.getCookies()) {
+                log.info("Cookie name: " + cookie.getName() + " value: " + cookie.getValue());
+
+            }
+        }
+
         String jwt = "";
 
         if (!(authentication.getPrincipal() instanceof OidcUser oidcUser)) {
@@ -46,6 +53,7 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
                     .address("No address")
                     .password(UUID.randomUUID().toString())
                     .provider("google")
+                    .picture(oidcUser.getPicture())
                     .build();
             userRepository.save(newUser);
             jwt = jwtService.getToken(newUser);
@@ -54,16 +62,15 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
             user.setEmail(userEmail);
             user.setUsername(oidcUser.getFullName());
             user.setProvider("google");
-            //TODO HACER LO DE LAS FOTOS DE PERFIL CON GOOGLE
+            user.setPicture(oidcUser.getPicture());
             userRepository.save(user);
             jwt = jwtService.getToken(user);
         }
-        Cookie jwtCookie = new Cookie("jwt", jwt);
-        jwtCookie.setHttpOnly(true);
-        jwtCookie.setSecure(true);
+        Cookie jwtCookie = new Cookie("accessToken", jwt);
+        //jwtCookie.setSecure(true);
         jwtCookie.setPath("/");
         response.addCookie(jwtCookie);
-        String frontendUrl = "http:localhost:3000/u";
+        String frontendUrl = "http:localhost:5173/u";
         response.sendRedirect(frontendUrl);
     }
 }

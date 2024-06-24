@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.jda.shopswap.Jwt.JwtAuthenticationFilter;
 import org.jda.shopswap.models.user.Role;
 import org.jda.shopswap.oauth2.CustomOAuth2SuccessHandler;
-import org.jda.shopswap.oauth2.CustomOAuth2UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -25,7 +24,6 @@ import java.util.List;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private final CustomOAuth2UserService customOAuth2UserService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final AuthenticationProvider authProvider;
     private final CustomOAuth2SuccessHandler customOAuth2SuccessHandler;
