@@ -7,8 +7,6 @@ import { jwtDecode } from "jwt-decode";
 import { loginThunkSpring } from "@/store/thunks/auth.thunk";
 import { GoogleCredential } from "@/Interfaces/GoogleCredential";
 
-const apiUrl = import.meta.env.VITE_BASE_URL;
-
 export default function Login() {
     const { isAuth } = useAppSelector((state) => state.authReducer);
     const dispatch = useAppDispatch();

@@ -16,7 +16,7 @@ import {useAppSelector} from "@/store/hooks.ts";
 
 function GeneralNav() {
 
-    const {isAuth, userData} = useAppSelector((state) => state.authReducer)
+    const {isAuth} = useAppSelector((state) => state.authReducer)
     return (
         <nav className="flex gap-4  justify-around items-center shadow p-5">
             <Link to="/"><h1 className="text-3xl font-bold text-primary">ShopSwap</h1></Link>
