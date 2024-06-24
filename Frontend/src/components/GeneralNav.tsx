@@ -20,7 +20,7 @@ function GeneralNav() {
     return (
         <nav className="flex gap-4  justify-around items-center shadow p-5">
             <Link to="/"><h1 className="text-3xl font-bold text-primary">ShopSwap</h1></Link>
-            <div className="w-1/3 flex gap-5">
+            <div className="hidden lg:flex w-1/3 flex gap-5">
                 {//TODO add search functionality
                 }
                 <Input placeholder="Busca productos, marcas y mas..."/>

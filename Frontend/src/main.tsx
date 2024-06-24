@@ -15,6 +15,7 @@ import Profile from "@/pages/u/Settings/Profile.tsx";
 import Cuenta from "@/pages/u/Settings/Cuenta.tsx";
 import Appareance from "@/pages/u/Settings/Appareance.tsx";
 import DashboardConf from "@/pages/u/Settings/DashboardConf.tsx";
+import ChangePassword from "./pages/u/Settings/ChangePassword";
 
 const router = createBrowserRouter([
     {
@@ -46,6 +47,11 @@ const router = createBrowserRouter([
                         path: "dashboard",
                         element: <DashboardConf />,
                     },
+                    {
+                        path: "change_password",
+                        element: <ChangePassword/>,
+                    }
+
                 ],
             },
             {
