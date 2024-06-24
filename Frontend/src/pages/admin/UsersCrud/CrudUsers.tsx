@@ -140,7 +140,7 @@ function TableRow({user, setRefreshData, refreshData}: {
                 <div className="inline-flex items-center gap-x-3">
                     <div className="flex items-center gap-x-2">
                         <img className="object-cover w-10 h-10 rounded-full"
-                             src="https://images.unsplash.com/photo-1488508872907-592763824245?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+                             src={user.picture ? user.picture : "https://w7.pngwing.com/pngs/578/405/png-transparent-user-person-profile-avatar-man-male-human-login-username-people.png"}
                              alt=""/>
                         <div>
                             <h2 className="font-medium text-gray-800  ">{user.username}</h2>
