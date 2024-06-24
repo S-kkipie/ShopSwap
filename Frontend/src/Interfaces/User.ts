@@ -6,4 +6,6 @@ export default interface User {
     id: number;
     status: boolean;
     password: string;
+    picture: string;
+    provider: string;
 }

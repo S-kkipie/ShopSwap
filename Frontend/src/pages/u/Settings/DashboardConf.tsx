@@ -1,8 +1,6 @@
-import React from 'react';
-
-function DashboardConf(props) {
+function DashboardConf() {
     return (
-        <div></div>
+        <div>Configuracion de Dashboard</div>
     );
 }
 

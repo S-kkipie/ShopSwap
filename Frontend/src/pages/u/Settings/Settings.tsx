@@ -1,29 +1,49 @@
-import {useAppSelector} from "@/store/hooks.ts";
 import {Separator} from "@/components/ui/separator.tsx";
-import {Link} from "react-router-dom";
+import {Link, Outlet, useLocation} from "react-router-dom";
 
 function Settings() {
 
-    const {userData} = useAppSelector((state) => state.authReducer)
-
+    const location = useLocation();
     return (
-
-        <div className="p-8">
-            <div>
-                <h1 className="text-2xl mb-1 font-bold tracking-tight">Configuraciones</h1>
-                <p className="text-muted-foreground">Cambia las configuraciones de tu cuenta</p>
+        <div className="p-8 h-screen">
+            <div className="flex flex-col lg:flex-row gap-10 py-5 h-full">
+                <nav className="flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1 w-48">
+                    <Link
+                        className={`transition whitespace-nowrap rounded-md text-sm font-medium h-9 px-4 py-2 justify-start ${
+                            location.pathname.includes('/profile') ? 'bg-muted' : ''
+                        }`}
+                        to="profile"
+                    >
+                        Perfil
+                    </Link>
+                    <Link
+                        className={`transition whitespace-nowrap rounded-md text-sm font-medium h-9 px-4 py-2 justify-start ${
+                            location.pathname.includes('account') ? 'bg-muted' : ''
+                        }`}
+                        to="account"
+                    >
+                        Cuenta
+                    </Link>
+                    <Link
+                        className={`transition whitespace-nowrap rounded-md text-sm font-medium h-9 px-4 py-2 justify-start ${
+                            location.pathname.includes('appareance') ? 'bg-muted' : ''
+                        }`}
+                        to="appareance"
+                    >
+                        Personalizacion
+                    </Link>
+                    <Link
+                        className={`transition whitespace-nowrap rounded-md text-sm font-medium h-9 px-4 py-2 justify-start ${
+                            location.pathname.includes('dashboard') ? 'bg-muted' : ''
+                        }`}
+                        to="dashboard"
+                    >
+                        Dashboard
+                    </Link>
+                </nav>
+                <Separator className="mx-2" orientation="vertical"/>
+                <Outlet/>
             </div>
-            <Separator className="my-2"/>
-            <nav className="flex flex-col">
-                <Link to={}/>
-                <Link to={}/>
-                <Link to={}/>
-            </nav>
-            <div></div>
-            <h1>Nombre de usuario: {userData!.username}</h1>
-            <h2>Correo: {userData!.email}</h2>
-            <h3>Direccion: {userData!.address}</h3>
-            <h4>Permisos: {userData!.role}</h4>
         </div>
     );
 }
