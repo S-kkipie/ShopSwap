@@ -68,7 +68,7 @@ function Profile() {
         <div className="lg:w-9/12 lg:h-[90%] p-8 lg:py-10 lg:px-20  bg-white/80 shadow-xl rounded-xl border">
             <h1 className="text-3xl font-bold mb-3">Configuracion de perfil</h1>
             <p className="text-sm">Así es como te verán los demás en el sitio.</p>
-            <Separator className="mt-5" orientation="horizontal" />
+            <Separator className="my-5" orientation="horizontal" />
 
             <div className="w-full lg:h-full flex items-center">
                 <Form {...form}>
@@ -77,7 +77,7 @@ function Profile() {
                             control={form.control}
                             name="username"
                             render={({ field }) => (
-                                <FormItem className="lg:w-5/12">
+                                <FormItem className="w-full lg:w-5/12">
                                     <FormLabel>Nombre de usuario</FormLabel>
                                     <FormControl>
                                         <Input placeholder="Tu nombre de usuario" {...field} />
@@ -90,7 +90,7 @@ function Profile() {
                             control={form.control}
                             name="email"
                             render={({ field }) => (
-                                <FormItem className="lg:w-5/12">
+                                <FormItem className="w-full lg:w-5/12">
                                     <FormLabel>Email</FormLabel>
                                     <FormControl>
                                         <Input disabled={userData?.provider === "google"} placeholder="Tu email" {...field} />
@@ -112,9 +112,9 @@ function Profile() {
                                 </FormItem>
                             )}
                         />
-                        <Separator className="lg:w-5/12" orientation="horizontal" />
+                        <Separator className="w-full lg:w-5/12" orientation="horizontal" />
 
-                        <div className="flex  lg:w-5/12 items-center justify-between">
+                        <div className="flex  w-full lg:w-5/12 items-center justify-between">
                             <h1>Contraseña</h1>
                             {userData?.provider !== "google" ? (
                                 <Link to="/u/settings/change_password">
@@ -126,13 +126,13 @@ function Profile() {
                                 <h1 className="text-muted-foreground cursor-not-allowed w-1/2">Inicia sesion usando tu cuenta de Google</h1>
                             )}
                         </div>
-                        <Separator className="lg:w-5/12" orientation="horizontal" />
+                        <Separator className="w-full lg:w-5/12" orientation="horizontal" />
 
                         <FormField
                             control={form.control}
                             name="address"
                             render={({ field }) => (
-                                <FormItem className="lg:w-5/12">
+                                <FormItem className="w-full lg:w-5/12">
                                     <FormLabel>Tu direccion</FormLabel>
                                     <FormControl>
                                         <Input placeholder="Tu direccion" {...field} />
@@ -145,7 +145,7 @@ function Profile() {
                             control={form.control}
                             name="picture"
                             render={({ field }) => (
-                                <FormItem className="lg:w-5/12">
+                                <FormItem className="w-full lg:w-5/12">
                                     <FormLabel>Url de tu foto de perfil</FormLabel>
                                     <FormControl>
                                         <Input disabled={userData?.provider === "google"} placeholder="La URL de tu foto de perfil" {...field} />
@@ -154,7 +154,7 @@ function Profile() {
                                 </FormItem>
                             )}
                         />
-                        <Separator className="lg:w-5/12" orientation="horizontal" />
+                        <Separator className="w-full lg:w-5/12" orientation="horizontal" />
                         <div className="flex gap-5">
                             <Button className="mb-8" variant="outline" type="submit">
                                 Actualizar Perfil
