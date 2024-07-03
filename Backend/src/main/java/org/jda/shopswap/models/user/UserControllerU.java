@@ -47,6 +47,7 @@ public class UserControllerU {
             if (!updatedUser.getPassword().equals(passwordEncoder.encode(lastPassword))) {
                 return ResponseEntity.badRequest().body(new MessageResponse("Contraseña anterior incorrecta"));
             }
+
             return ResponseEntity.ok(new MessageResponse("Contraseña actualizada correctamente"));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new MessageResponse("No se encontro el usuario a actualizar"));
@@ -78,7 +79,7 @@ public class UserControllerU {
             updatedUser.setProvider("google");
             updatedUser.setUsername(user.getUsername());
             updatedUser.setPicture(user.getPicture());
-            updatedUser.setPassword(user.getPassword());
+            updatedUser.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(updatedUser);
             return ResponseEntity.ok(updatedUser);
         } catch (Exception e) {
