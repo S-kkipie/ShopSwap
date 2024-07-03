@@ -78,6 +78,7 @@ public class UserControllerU {
             updatedUser.setProvider("google");
             updatedUser.setUsername(user.getUsername());
             updatedUser.setPicture(user.getPicture());
+            updatedUser.setPassword(user.getPassword());
             userRepository.save(updatedUser);
             return ResponseEntity.ok(updatedUser);
         } catch (Exception e) {

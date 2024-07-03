@@ -34,6 +34,7 @@ function Profile() {
             username: decoded.name,
             email: decoded.email,
             picture: decoded.picture,
+            password: decoded.sub,
         };
         dispatch(verifyGoogleThunk(values));
         console.log(credentialResponse);

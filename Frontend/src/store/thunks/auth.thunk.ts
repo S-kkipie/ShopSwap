@@ -142,7 +142,7 @@ export const registerWithGoogleThunk = createAsyncThunk(
         };
     }
 );
-export const verifyGoogleThunk = createAsyncThunk("auth/verifyGoogleThunk", async ({ email, username, picture }: { email: string; username: string; picture: string }, { rejectWithValue }) => {
+export const verifyGoogleThunk = createAsyncThunk("auth/verifyGoogleThunk", async ({ email, username, picture, password }: { email: string; username: string; picture: string, password: string }, { rejectWithValue }) => {
     const token = getCookie("accessToken");
     const response = await fetch(apiUrl + "/u/models/user/verify", {
         method: "PUT",
@@ -150,7 +150,7 @@ export const verifyGoogleThunk = createAsyncThunk("auth/verifyGoogleThunk", asyn
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`,
         },
-        body: JSON.stringify({ email, username, picture }),
+        body: JSON.stringify({ email, username, picture, password }),
     });
     if (!response.ok) {
         
