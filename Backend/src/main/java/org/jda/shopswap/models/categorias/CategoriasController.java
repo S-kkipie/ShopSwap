@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping(path = "/api/models/categorias")
 public class CategoriasController {
     @Autowired
-    private CategoriasRepository categoriasRepository;
+    private final CategoriasRepository categoriasRepository;
     private final CategoriasService categoriasService;
 
     @PostMapping("/createCategory")
