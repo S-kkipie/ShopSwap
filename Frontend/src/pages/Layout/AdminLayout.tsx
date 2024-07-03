@@ -19,7 +19,7 @@ function AdminLayout() {
         }
     }, [isExpired, remove]);
 
-    return userData!.role === "ADMIN" ?(
+    return userData?.role === "ADMIN" ?(
         <div className="flex flex-col items-center  m-8 mt-16" >
            <h1 className=" text-3xl font-semibold tracking-tight">Administrator Panel</h1>
             <Outlet/>

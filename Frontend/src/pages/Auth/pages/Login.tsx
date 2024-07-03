@@ -21,13 +21,13 @@ export default function Login() {
         navigate("/u");
     }
     return !isAuth ? (
-        <div className="flex xl:h-screen flex-col ">
-            <nav className=" flex  shadow p-5">
+        <div className="flex h-screen flex-col ">
+            <nav className=" flex  p-5">
                 <Link to="/">
-                    <h1 className="text-3xl font-bold text-primary">ShopSwap</h1>
+                    <h1 className="text-3xl font-bold text-primary ">ShopSwap</h1>
                 </Link>
             </nav>
-            <div className="flex-1 flex items-center justify-center">
+            <div className="flex-1 flex xl:items-center justify-center">
                 <div className="p-12 xl:p-0 mt-16  xl:mt-0 w-full md:w-8/12 xl:w-1/4">
                     <Card>
                         <CardHeader>

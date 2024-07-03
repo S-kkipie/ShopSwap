@@ -5,8 +5,8 @@ function Settings() {
 
     const location = useLocation();
     return (
-        <div className="p-8 h-screen">
-            <div className="flex flex-col lg:flex-row gap-10 py-5 h-full">
+        <div className="p-8 lg:h-[calc(100vh-250px)]">
+            <div className="flex flex-col lg:h-[calc(100vh-200px)] lg:flex-row gap-5 lg:gap-10 py-5 ">
                 <nav className="flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1 w-48">
                     <Link
                         className={`transition whitespace-nowrap rounded-md text-sm font-medium h-9 px-4 py-2 justify-start ${
@@ -41,7 +41,7 @@ function Settings() {
                         Dashboard
                     </Link>
                 </nav>
-                <Separator className="mx-2" orientation="vertical"/>
+                <Separator className="mx-2 lg:hidden" orientation="horizontal"/>
                 <Outlet/>
             </div>
         </div>

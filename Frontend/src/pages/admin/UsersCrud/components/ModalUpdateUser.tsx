@@ -60,7 +60,7 @@ function UpdateUserForm({onUserUpdated, userToUpdate}: { onUserUpdated: () => vo
 
     function onSubmit(values: z.infer<typeof formSchema>) {
         const fetchData = async () => {
-            const response = await fetch( apiUrl+ '/api/models/user/update/' + userToUpdate.id, {
+            const response = await fetch( apiUrl+ '/admin/models/user/update/' + userToUpdate.id, {
                 method: 'PUT',
                 body: JSON.stringify(values),
                 headers: {

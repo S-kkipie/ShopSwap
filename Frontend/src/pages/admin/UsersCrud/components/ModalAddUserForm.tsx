@@ -61,7 +61,7 @@ function AddUserForm({onUserAdded}: { onUserAdded: () => void }) {
     function onSubmit(values: z.infer<typeof formSchema>) {
 
         const fetchData = async () => {
-            const response = await fetch(apiUrl+ '/api/models/user/saveUser', {
+            const response = await fetch(apiUrl+ '/admin/models/user/saveUser', {
                 method: 'POST',
                 body: JSON.stringify(values),
                 headers: {

@@ -14,7 +14,7 @@ const apiUrl = import.meta.env.VITE_BASE_URL;
 function ModalConfirmDelete({userId, userName, onUserDeleted }: { userId: number, userName: string, onUserDeleted: () => void}) {
     const {accessToken} = useAppSelector((state) => state.authReducer)
     const fetchDeleteUser = async () => {
-        const response = await fetch(apiUrl+ "/api/models/user/deactivate/" + userId, {
+        const response = await fetch(apiUrl+ "/admin/models/user/deactivate/" + userId, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

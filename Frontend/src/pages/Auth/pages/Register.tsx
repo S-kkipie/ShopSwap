@@ -13,21 +13,21 @@ function Register() {
 
     function registerWithGoogle(credentialResponse: CredentialResponse): void {
         const decoded = jwtDecode<GoogleCredential>(credentialResponse.credential!);
-        const values={
+        const values = {
             username: decoded.name,
             password: decoded.sub,
             email: decoded.email,
             address: "No address provided",
             picture: decoded.picture,
-            provider: "google"
-        }
+            provider: "google",
+        };
         dispatch(registerWithGoogleThunk(values));
         navigate("/u");
     }
 
     return !isAuth ? (
         <div className="flex xl:h-screen flex-col ">
-            <nav className=" flex  shadow p-5">
+            <nav className=" flex  p-5">
                 <Link to="/">
                     <h1 className="text-3xl font-bold text-primary">ShopSwap</h1>
                 </Link>
@@ -39,9 +39,9 @@ function Register() {
                             <CardTitle className="text-3xl font-bold mb-2 text-center text-primary">Sign in</CardTitle>
                             <CardDescription className="text-center">Enter your information to sign in</CardDescription>
                         </CardHeader>
-                        <CardContent>
+                        <CardContent className="flex flex-col items-center w-full">
                             <RegisterForm />
-                            <div className="relative m-5">
+                            <div className="w-full relative m-5">
                                 <div className="absolute inset-0 flex items-center">
                                     <span className="w-full border-t"></span>
                                 </div>
@@ -49,7 +49,7 @@ function Register() {
                                     <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
                                 </div>
                             </div>
-                            <GoogleLogin 
+                            <GoogleLogin
                                 onSuccess={registerWithGoogle}
                                 onError={() => {
                                     console.log("Login Failed");
