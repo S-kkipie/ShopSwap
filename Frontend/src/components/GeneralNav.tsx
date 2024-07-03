@@ -14,7 +14,7 @@ function GeneralNav() {
             <Link to="/">
                 <h1 className="text-3xl font-bold text-primary">ShopSwap</h1>
             </Link>
-            <div className="hidden lg:flex w-1/3 gap-5">
+            <div className="hidden lg:flex w-1/3 lg:gap-5">
                 {
                     //TODO add search functionality
                 }
