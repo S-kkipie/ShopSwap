@@ -1,4 +1,4 @@
-package org.jda.shopswap.Jwt;
+package org.jda.shopswap.jwt;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

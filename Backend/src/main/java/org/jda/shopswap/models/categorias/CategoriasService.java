@@ -1,13 +1,10 @@
 package org.jda.shopswap.models.categorias;
 
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.jda.shopswap.Jwt.JwtService;
-import org.jda.shopswap.models.user.User;
+import org.jda.shopswap.jwt.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 
 @Service

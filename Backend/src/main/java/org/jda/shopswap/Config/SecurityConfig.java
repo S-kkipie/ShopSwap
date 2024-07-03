@@ -1,7 +1,7 @@
-package org.jda.shopswap.Config;
+package org.jda.shopswap.config;
 
 import lombok.RequiredArgsConstructor;
-import org.jda.shopswap.Jwt.JwtAuthenticationFilter;
+import org.jda.shopswap.jwt.JwtAuthenticationFilter;
 import org.jda.shopswap.models.user.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,8 +32,8 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(authRequest ->
                         authRequest.requestMatchers("/auth/**").permitAll()
-                                .requestMatchers("/api/models/**").hasAnyAuthority(Role.ADMIN.name())
-                                .requestMatchers("/u/**").hasAnyAuthority(Role.USER.name())
+                                .requestMatchers("/admin/models/**").hasAnyAuthority(Role.ADMIN.name())
+                                .requestMatchers("/u/models/**").hasAnyAuthority(Role.USER.name(), Role.ADMIN.name())
                                 .anyRequest().authenticated())
                 .sessionManagement(sessionManagement ->
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

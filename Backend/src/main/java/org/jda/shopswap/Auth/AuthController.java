@@ -1,4 +1,4 @@
-package org.jda.shopswap.Auth;
+package org.jda.shopswap.auth;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -1,7 +1,7 @@
-package org.jda.shopswap.Auth;
+package org.jda.shopswap.auth;
 
 import lombok.RequiredArgsConstructor;
-import org.jda.shopswap.Jwt.JwtService;
+import org.jda.shopswap.jwt.JwtService;
 import org.jda.shopswap.models.user.Role;
 import org.jda.shopswap.models.user.User;
 import org.jda.shopswap.models.user.UserRepository;

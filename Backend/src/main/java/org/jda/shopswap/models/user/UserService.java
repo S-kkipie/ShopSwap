@@ -1,7 +1,7 @@
 package org.jda.shopswap.models.user;
 
 import lombok.RequiredArgsConstructor;
-import org.jda.shopswap.Jwt.JwtService;
+import org.jda.shopswap.jwt.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

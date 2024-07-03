@@ -1,17 +1,15 @@
 package org.jda.shopswap.models.user;
 
 import lombok.RequiredArgsConstructor;
-import org.jda.shopswap.Jwt.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(path = "/api/models/user")
-public class UserController {
+@RequestMapping(path = "/admin/models/user")
+public class UserControllerAdmin {
     @Autowired
     private UserRepository userRepository;
     private final UserService userService;
