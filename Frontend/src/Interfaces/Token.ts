@@ -4,8 +4,10 @@ export interface Token {
     role:     string;
     id:       number;
     email:    string;
+    picture:  string;
     username: string;
     sub:      string;
     iat:      number;
     exp:      number;
+    provider: string;
 }

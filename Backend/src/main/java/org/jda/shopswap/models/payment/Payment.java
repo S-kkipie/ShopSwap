@@ -3,7 +3,7 @@ package org.jda.shopswap.models.payment;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.jda.shopswap.models.productos.Productos;
+import org.jda.shopswap.models.productos.Producto;
 
 import java.time.LocalDateTime;
 @Getter
@@ -17,7 +17,7 @@ public class Payment {
 
     @ManyToOne
     @JoinColumn(name = "product_ID")
-    private Productos producto;
+    private Producto producto;
 
     private LocalDateTime created;
     private LocalDateTime modified;

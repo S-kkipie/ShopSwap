@@ -1,5 +1,5 @@
 import {Navigate, Outlet} from "react-router-dom";
-import Nav from "@/components/Nav.tsx";
+import GeneralNav from "@/components/GeneralNav.tsx";
 import Footer from "@/components/ui/Footer.tsx";
 import {useAppSelector} from "@/store/hooks.ts";
 import {useCookies} from "react-cookie";
@@ -20,8 +20,8 @@ function PrivateLayout() {
         }
     }, [isExpired, remove]);
     return isAuth ? (
-        <div>
-            <Nav/>
+        <div >
+            <GeneralNav/>
             <Outlet/>
             <Footer/>
             <Toaster />

@@ -14,7 +14,8 @@ import {Button} from "@/components/ui/button.tsx";
 import {useCookies} from "react-cookie";
 import {useAppSelector} from "@/store/hooks.ts";
 
-function Nav() {
+function GeneralNav() {
+
     const {isAuth} = useAppSelector((state) => state.authReducer)
     return (
         <nav className="flex gap-4  justify-around items-center shadow p-5">
@@ -54,13 +55,13 @@ function DropDownUser() {
     return <DropdownMenu>
         <DropdownMenuTrigger className="rounded-full">
             <Avatar>
-                <AvatarImage src="https://cdn.icon-icons.com/icons2/2468/PNG/512/user_kids_avatar_user_profile_icon_149314.png"/>
+                <AvatarImage src={userData!.picture? userData!.picture : "https://w7.pngwing.com/pngs/578/405/png-transparent-user-person-profile-avatar-man-male-human-login-username-people.png" }/>
             </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator/>
-            <Link  to="/u/profile"><DropdownMenuItem className="cursor-pointer">Profile</DropdownMenuItem></Link>
+            <Link  to="/u/settings/profile"><DropdownMenuItem className="cursor-pointer">Settings</DropdownMenuItem></Link>
             {userData!.role === "ADMIN" && <Link to="/u/admin/crud"><DropdownMenuItem>ShopSwap Admin</DropdownMenuItem></Link>}
             <DropdownMenuItem>Billing</DropdownMenuItem>
             <DropdownMenuItem>Team</DropdownMenuItem>
@@ -70,4 +71,4 @@ function DropDownUser() {
     </DropdownMenu>
 }
 
-export default Nav;
+export default GeneralNav;

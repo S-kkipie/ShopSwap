@@ -14,4 +14,6 @@ public class RegisterRequest {
     String password;
     String email;
     String address;
+    String picture;
+    String provider;
 }

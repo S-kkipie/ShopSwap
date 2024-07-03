@@ -37,6 +37,8 @@ public class AuthService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .email(request.getEmail())
                 .address(request.getAddress())
+                .picture(request.getPicture())
+                .provider(request.getProvider())
                 .role(Role.USER)
                 .status(true)
                 .build();

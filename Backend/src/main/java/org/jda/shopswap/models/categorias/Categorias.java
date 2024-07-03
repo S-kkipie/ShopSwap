@@ -3,7 +3,7 @@ package org.jda.shopswap.models.categorias;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.jda.shopswap.models.productos.Productos;
+import org.jda.shopswap.models.productos.Producto;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -26,6 +26,6 @@ public class Categorias {
     private LocalDateTime modified;
 
     @OneToMany(mappedBy = "categoria")
-    private Set<Productos> productos;
+    private Set<Producto> productos;
 
 }

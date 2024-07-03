@@ -1,8 +1,7 @@
 package org.jda.shopswap.models.productos;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.jda.shopswap.models.categorias.Categorias;
 import org.jda.shopswap.models.user.User;
 
@@ -11,7 +10,10 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @Entity
-public class Productos {
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class Producto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
