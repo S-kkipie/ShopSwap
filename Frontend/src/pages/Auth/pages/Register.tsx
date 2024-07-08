@@ -63,6 +63,7 @@ function Register() {
                             </p>
                         </CardContent>
                     </Card>
+
                 </div>
             </div>
         </div>
