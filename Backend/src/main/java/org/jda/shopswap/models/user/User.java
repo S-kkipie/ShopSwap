@@ -1,16 +1,16 @@
 package org.jda.shopswap.models.user;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+import org.jda.shopswap.models.product.Product;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 
-import java.net.URL;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 @Entity
 
@@ -19,7 +19,7 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
-public class User implements UserDetails, OAuth2User {
+public class User implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -34,12 +34,11 @@ public class User implements UserDetails, OAuth2User {
     Role role;
     String provider;
     Boolean status;
-    URL picture;
+    String picture;
 
-    @Override
-    public Map<String, Object> getAttributes() {
-        return Map.of();
-    }
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference("user-product")
+    private Set<Product> products;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -66,8 +65,4 @@ public class User implements UserDetails, OAuth2User {
         return this.status;
     }
 
-    @Override
-    public String getName() {
-        return this.username;
-    }
 }

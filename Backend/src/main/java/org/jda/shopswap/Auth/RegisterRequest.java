@@ -1,4 +1,4 @@
-package org.jda.shopswap.Auth;
+package org.jda.shopswap.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,4 +14,6 @@ public class RegisterRequest {
     String password;
     String email;
     String address;
+    String picture;
+    String provider;
 }

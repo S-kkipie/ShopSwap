@@ -1,4 +1,4 @@
-package org.jda.shopswap.Config;
+package org.jda.shopswap.config;
 
 import lombok.RequiredArgsConstructor;
 import org.jda.shopswap.models.user.UserRepository;

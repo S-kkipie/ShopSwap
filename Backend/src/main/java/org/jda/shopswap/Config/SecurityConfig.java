@@ -1,10 +1,8 @@
-package org.jda.shopswap.Config;
+package org.jda.shopswap.config;
 
 import lombok.RequiredArgsConstructor;
-import org.jda.shopswap.Jwt.JwtAuthenticationFilter;
+import org.jda.shopswap.jwt.JwtAuthenticationFilter;
 import org.jda.shopswap.models.user.Role;
-import org.jda.shopswap.oauth2.CustomOAuth2SuccessHandler;
-import org.jda.shopswap.oauth2.CustomOAuth2UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -25,10 +23,8 @@ import java.util.List;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private final CustomOAuth2UserService customOAuth2UserService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final AuthenticationProvider authProvider;
-    private final CustomOAuth2SuccessHandler customOAuth2SuccessHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -36,14 +32,12 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(authRequest ->
                         authRequest.requestMatchers("/auth/**").permitAll()
-                                .requestMatchers("/api/models/**").hasAnyAuthority(Role.ADMIN.name())
-                                .requestMatchers("/u/**").hasAnyAuthority(Role.USER.name())
+                                .requestMatchers("/admin/models/**").hasAnyAuthority(Role.ADMIN.name())
+                                .requestMatchers("/u/models/**").hasAnyAuthority(Role.USER.name(), Role.ADMIN.name())
+                                .requestMatchers("/health").permitAll()
                                 .anyRequest().authenticated())
                 .sessionManagement(sessionManagement ->
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .oauth2Login(oauth2 -> oauth2
-                        .successHandler(customOAuth2SuccessHandler)
-                )
                 .authenticationProvider(authProvider)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
