@@ -5,7 +5,7 @@ import ModalUpdateProduct from "./ModalUpdateProduct";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog.tsx";
 
 function ProductCard({ product, onProductAdded}: {product: Product, onProductAdded: () => void}) {
-    const { name, description, price, imgUrl, tags, stock, rating } = product;
+    const { name, description, price, imgUrl, tags, stock} = product;
     return (
         <Dialog>
             <DialogTrigger asChild>
