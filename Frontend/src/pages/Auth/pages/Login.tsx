@@ -21,6 +21,7 @@ export default function Login() {
         navigate("/u");
     }
     return !isAuth ? (
+
         <div className="flex h-screen flex-col ">
             <nav className=" flex  p-5">
                 <Link to="/">
