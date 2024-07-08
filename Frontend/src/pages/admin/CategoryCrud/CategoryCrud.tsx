@@ -1,6 +1,5 @@
 import { useAppSelector } from "@/store/hooks.ts";
 import { useEffect, useState } from "react";
-import ModalUpdateUser from "@/pages/admin/UsersCrud/modals/ModalUpdateUser";
 import { useToast } from "@/components/ui/use-toast";
 import { Category } from "@/Interfaces/Category";
 import ModalAddCategory from "./modals/ModalAddCategory";
