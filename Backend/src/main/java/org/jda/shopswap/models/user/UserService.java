@@ -14,7 +14,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
 
-    public User createUser(User user, String token){
+    public User createUser(User user, String token) {
         Long adminId = jwtService.getUserIdFromToken(jwtService.getTokenFromHeader(token));
         User newUser = User.builder()
                 .username(user.getUsername())
@@ -25,9 +25,14 @@ public class UserService {
                 .role(user.getRole())
                 .status(true)
                 .build();
-        return userRepository.save(newUser);
+        try {
+            return userRepository.save(newUser);
+        } catch (Exception ex) {
+            return null;
+        }
     }
-    public User updateUser(int id, User user, String token){
+
+    public User updateUser(Long id, User user, String token) {
         Long adminId = jwtService.getUserIdFromToken(jwtService.getTokenFromHeader(token));
         User newDataUser = userRepository.findById(id).orElseThrow();
         newDataUser.setUsername(user.getUsername());
@@ -41,7 +46,8 @@ public class UserService {
         newDataUser.setStatus(user.isEnabled());
         return userRepository.save(newDataUser);
     }
-    public User deactivateUser(int id, String token){
+
+    public User deactivateUser(Long id, String token) {
         Long adminId = jwtService.getUserIdFromToken(jwtService.getTokenFromHeader(token));
         User userDeactivate = userRepository.findById(id).orElseThrow();
         userDeactivate.setUserModifiedId(adminId);

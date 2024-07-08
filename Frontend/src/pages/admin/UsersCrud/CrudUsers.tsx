@@ -1,9 +1,9 @@
 import { useAppSelector } from "@/store/hooks.ts";
 import { useEffect, useState } from "react";
-import { ModalAddUser } from "@/pages/admin/UsersCrud/components/ModalAddUserForm.tsx";
-import ModalConfirmDelete from "@/pages/admin/UsersCrud/components/ModalConfirmDelete.tsx";
-import ModalUpdateUser from "@/pages/admin/UsersCrud/components/ModalUpdateUser.tsx";
+import ModalAddUser from "@/pages/admin/UsersCrud/modals/ModalAddUser";
+import ModalUpdateUser from "@/pages/admin/UsersCrud/modals/ModalUpdateUser";
 import User from "@/Interfaces/User.ts";
+import ModalConfirmDeleteUser from "./modals/ModalConfirmDeleteUser";
 const apiUrl = import.meta.env.VITE_BASE_URL;
 
 function CrudUsers() {
@@ -127,7 +127,6 @@ function TableRow({ user, setRefreshData, refreshData }: { user: User; setRefres
             <td className="px-12 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                 <div className={`inline-flex items-center px-3 py-1 rounded-full gap-x-2 ${user.status ? "bg-emerald-100/60" : "bg-red-100/60"}`}>
                     {
-                        //TODO implementar esto
                         user.status ? (
                             <>
                                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
@@ -146,7 +145,7 @@ function TableRow({ user, setRefreshData, refreshData }: { user: User; setRefres
             <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">{user.password}</td>
             <td className="px-4 py-4 text-sm whitespace-nowrap">
                 <div className="flex items-center gap-x-6">
-                    <ModalConfirmDelete userId={user.id} userName={user.username} onUserDeleted={() => setRefreshData(!refreshData)} />
+                    <ModalConfirmDeleteUser userId={user.id} userName={user.username} onUserDeleted={() => setRefreshData(!refreshData)} />
                     <ModalUpdateUser onUserUpdated={() => setRefreshData(!refreshData)} userToUpdate={user} />
                 </div>
             </td>

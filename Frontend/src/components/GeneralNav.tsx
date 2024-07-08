@@ -60,12 +60,14 @@ function DropDownUser() {
                     <DropdownMenuItem className="cursor-pointer">Settings</DropdownMenuItem>
                 </Link>
                 {userData?.role === "ADMIN" && (
-                    <Link to="/u/admin/crud">
+                    <Link to="/u/admin/users">
                         <DropdownMenuItem>ShopSwap Admin</DropdownMenuItem>
                     </Link>
                 )}
+                <Link to="/u/product/productList">
+                    <DropdownMenuItem className="cursor-pointer">Product</DropdownMenuItem>
+                </Link>
                 <DropdownMenuItem>Billing</DropdownMenuItem>
-                <DropdownMenuItem>Team</DropdownMenuItem>
                 <DropdownMenuItem>Subscription</DropdownMenuItem>
                 <DropdownMenuItem onClick={handleLogout}>Log out</DropdownMenuItem>
             </DropdownMenuContent>
