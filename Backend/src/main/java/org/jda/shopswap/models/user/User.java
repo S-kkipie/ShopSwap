@@ -1,15 +1,16 @@
 package org.jda.shopswap.models.user;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+import org.jda.shopswap.models.product.Product;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.net.URL;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 @Entity
 
@@ -34,6 +35,10 @@ public class User implements UserDetails{
     String provider;
     Boolean status;
     String picture;
+
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference("user-product")
+    private Set<Product> products;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

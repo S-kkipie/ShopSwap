@@ -16,6 +16,10 @@ import Cuenta from "@/pages/u/Settings/Cuenta.tsx";
 import Appareance from "@/pages/u/Settings/Appareance.tsx";
 import DashboardConf from "@/pages/u/Settings/DashboardConf.tsx";
 import ChangePassword from "./pages/u/Settings/ChangePassword";
+import Product from "./pages/u/Product/Product";
+import NewProduct from "./pages/u/Product/NewProduct";
+import CategoryCrud from "./pages/admin/CategoryCrud/CategoryCrud";
+import UserProductList from "./pages/u/Product/UserProductList";
 
 const router = createBrowserRouter([
     {
@@ -49,9 +53,21 @@ const router = createBrowserRouter([
                     },
                     {
                         path: "change_password",
-                        element: <ChangePassword/>,
-                    }
-
+                        element: <ChangePassword />,
+                    },
+                ],
+            },
+            {
+                path: "product",
+                element: <Product />,
+                children: [
+                    {
+                        path: "newProduct",
+                        element: <NewProduct />,
+                    },                  {
+                        path: "productList",
+                        element: <UserProductList />,
+                    },
                 ],
             },
             {
@@ -59,9 +75,13 @@ const router = createBrowserRouter([
                 element: <AdminLayout />,
                 children: [
                     {
-                        path: "crud",
+                        path: "users",
                         element: <CrudUsers />,
                     },
+                    {
+                        path: "categories",
+                        element: <CategoryCrud />,
+                    }
                 ],
             },
         ],

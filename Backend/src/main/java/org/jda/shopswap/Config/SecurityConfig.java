@@ -34,6 +34,7 @@ public class SecurityConfig {
                         authRequest.requestMatchers("/auth/**").permitAll()
                                 .requestMatchers("/admin/models/**").hasAnyAuthority(Role.ADMIN.name())
                                 .requestMatchers("/u/models/**").hasAnyAuthority(Role.USER.name(), Role.ADMIN.name())
+                                .requestMatchers("/health").permitAll()
                                 .anyRequest().authenticated())
                 .sessionManagement(sessionManagement ->
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

@@ -21,7 +21,7 @@ public class UserControllerU {
     @PutMapping("/update")
     public ResponseEntity<MessageResponse> updateSelfUser(@RequestBody User userData, @RequestHeader String authorization) {
         try {
-            int userId = jwtService.getUserIdFromToken(jwtService.getTokenFromHeader(authorization)).intValue();
+            Long userId = jwtService.getUserIdFromToken(jwtService.getTokenFromHeader(authorization));
             log.info("User ID: " + userId);
             User updatedUser = userRepository.findById(userId).orElseThrow();
             if (!updatedUser.getProvider().equals("google")) {
@@ -42,7 +42,7 @@ public class UserControllerU {
     @PutMapping("/changePassword")
     public ResponseEntity<MessageResponse> changePassword(@RequestBody String lastPassword, @RequestBody String newPassword, @RequestHeader String authorization) {
         try {
-            int userId = jwtService.getUserIdFromToken(jwtService.getTokenFromHeader(authorization)).intValue();
+            Long userId = jwtService.getUserIdFromToken(jwtService.getTokenFromHeader(authorization));
             User updatedUser = userRepository.findById(userId).orElseThrow();
             if (!updatedUser.getPassword().equals(passwordEncoder.encode(lastPassword))) {
                 return ResponseEntity.badRequest().body(new MessageResponse("Contraseña anterior incorrecta"));
@@ -57,7 +57,7 @@ public class UserControllerU {
     @GetMapping("/self")
     public ResponseEntity<?> getSelfUser(@RequestHeader String authorization) {
         try {
-            int userId = jwtService.getUserIdFromToken(jwtService.getTokenFromHeader(authorization)).intValue();
+            Long userId = jwtService.getUserIdFromToken(jwtService.getTokenFromHeader(authorization));
             User user = userRepository.findById(userId).orElseThrow();
             return ResponseEntity.ok(user);
         } catch (Exception e) {
@@ -69,7 +69,7 @@ public class UserControllerU {
     @PutMapping("/verify")
     public ResponseEntity<?> verifyUser(@RequestBody User user, @RequestHeader String authorization) {
         try {
-            int userId = jwtService.getUserIdFromToken(jwtService.getTokenFromHeader(authorization)).intValue();
+            Long userId = jwtService.getUserIdFromToken(jwtService.getTokenFromHeader(authorization));
             User updatedUser = userRepository.findById(userId).orElseThrow();
             User equal = userRepository.findByEmail(user.getEmail()).orElse(null);
             if(equal != null && equal.getId() != userId){

@@ -11,11 +11,11 @@ import {DialogClose} from "@radix-ui/react-dialog";
 const apiUrl = import.meta.env.VITE_BASE_URL;
 
 
-function ModalConfirmDelete({userId, userName, onUserDeleted }: { userId: number, userName: string, onUserDeleted: () => void}) {
+function ModalConfirmDeleteCategory({categoryId, categoryName, onCategoryDeleted }: { categoryId: number, categoryName: string, onCategoryDeleted: () => void}) {
     const {accessToken} = useAppSelector((state) => state.authReducer)
-    const fetchDeleteUser = async () => {
-        const response = await fetch(apiUrl+ "/admin/models/user/deactivate/" + userId, {
-            method: "PUT",
+    const fetchDeleteCategory = async () => {
+        const response = await fetch(apiUrl+ "/admin/models/category/delete/" + categoryId, {
+            method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + accessToken,
@@ -24,15 +24,15 @@ function ModalConfirmDelete({userId, userName, onUserDeleted }: { userId: number
         if (response.ok) {
             toast(
                 {
-                    description: "Usuario descativado correctamente",
+                    description: "Categoria eliminada correctamente",
                     variant: "success"
                 }
             )
-            onUserDeleted();
+            onCategoryDeleted();
         } else {
             toast(
                 {
-                    description: "Error al descativar el usuario",
+                    description: "Error al eliminar la categoria",
                     variant: "destructive"
                 }
             )
@@ -54,12 +54,12 @@ function ModalConfirmDelete({userId, userName, onUserDeleted }: { userId: number
                     <DialogTitle className="text-xl">Estas seguro de esto?</DialogTitle>
                     <DialogDescription asChild>
                         <h1 className="text-lg">Esta accion eliminara por completo a <span
-                            className="font-bold">{userName}</span></h1>
+                            className="font-bold">{categoryName}</span></h1>
                     </DialogDescription>
                 </DialogHeader>
                 <DialogFooter>
                     <DialogClose asChild>
-                        <Button variant="destructive" onClick={fetchDeleteUser}>Confirm</Button>
+                        <Button variant="destructive" onClick={fetchDeleteCategory}>Confirm</Button>
                     </DialogClose>
                 </DialogFooter>
             </DialogContent>
@@ -67,4 +67,4 @@ function ModalConfirmDelete({userId, userName, onUserDeleted }: { userId: number
     );
 }
 
-export default ModalConfirmDelete;
+export default ModalConfirmDeleteCategory;

@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.jda.shopswap.models.payment.Payment;
-import org.jda.shopswap.models.productos.Producto;
+import org.jda.shopswap.models.product.Product;
 import org.jda.shopswap.models.shoppingOrden.ShoppingOrder;
 import org.jda.shopswap.models.user.User;
 
@@ -29,7 +29,7 @@ public class TransactionReport {
 
     @ManyToOne
     @JoinColumn(name = "product_ID")
-    private Producto producto;
+    private Product product;
 
     @ManyToOne
     @JoinColumn(name = "payment_ID")

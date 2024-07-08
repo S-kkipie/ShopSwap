@@ -61,7 +61,7 @@ function AddUserForm({onUserAdded}: { onUserAdded: () => void }) {
     function onSubmit(values: z.infer<typeof formSchema>) {
 
         const fetchData = async () => {
-            const response = await fetch(apiUrl+ '/admin/models/user/saveUser', {
+            const response = await fetch(apiUrl+ '/admin/models/user/create', {
                 method: 'POST',
                 body: JSON.stringify(values),
                 headers: {
@@ -69,16 +69,23 @@ function AddUserForm({onUserAdded}: { onUserAdded: () => void }) {
                     "Authorization": `Bearer ${accessToken}`
                 },
             });
-            const data = await response.json();
-            console.log(data);
-            onUserAdded();
-            if (buttonRef.current) {
-                buttonRef.current.click();
+            if (!response.ok) {
+                const message = await response.text();
+                toast({
+                    description: message,
+                    variant: "destructive",
+                });
+            } else {    
+                onUserAdded();
+                if (buttonRef.current) {
+                    buttonRef.current.click();
+                }
+                const message = await response.text();
+                toast({
+                    description: message,
+                    variant: "success",
+                });
             }
-            toast({
-                description: "Usuario creado correctamente!",
-                variant: "success",
-            })
         }
         fetchData();
     }
@@ -169,13 +176,13 @@ function AddUserForm({onUserAdded}: { onUserAdded: () => void }) {
     )
 }
 
-export function ModalAddUser({onUserAdded}: { onUserAdded: () => void }) {
+export default function ModalAddUser({onUserAdded}: { onUserAdded: () => void }) {
 
     return (
         <Dialog>
             <DialogTrigger asChild>
                 <Button
-                    className="flex items-center justify-center w-1/2 px-5 py-2 text-sm  text-white transition-colors duration-200 bg-primary rounded-lg  sm:w-auto gap-x-2 hover:bg-primary/90">
+                    className="flex items-center justify-center w-1/2 px-5 py-2 text-sm  text-white transition-colors duration-200 bg-primary rounded-lg  w-auto gap-x-2 hover:bg-primary/90">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5"
                          stroke="currentColor" className="w-5 h-5">
                         <path strokeLinecap="round" strokeLinejoin="round"
