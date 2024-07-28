@@ -44,6 +44,8 @@ public class UserService {
         newDataUser.setAddress(user.getAddress());
         newDataUser.setRole(user.getRole());
         newDataUser.setStatus(user.isEnabled());
+        newDataUser.setCity(user.getCity());
+        newDataUser.setCountry(user.getCountry());
         return userRepository.save(newDataUser);
     }
 
