@@ -1,5 +1,5 @@
 import { z } from "zod";
-import {useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form.tsx";
 import { Input } from "@/components/ui/input.tsx";
@@ -10,8 +10,9 @@ import { useAppSelector } from "@/store/hooks.ts";
 import { useEffect, useRef, useState } from "react";
 import { useToast } from "@/components/ui/use-toast.ts";
 import { Textarea } from "@/components/ui/textarea";
-import { Category } from "@/Interfaces/Category";
 import { Product } from "@/Interfaces/Product";
+import { Category } from "@/Interfaces/Category";
+import ModalDeleteProduct from "./ModalDeleteProduct";
 
 const apiUrl = import.meta.env.VITE_BASE_URL;
 const formSchema = z.object({
@@ -33,14 +34,15 @@ const formSchema = z.object({
         message: "Debes ingresar un número.",
     }),
     tags: z.string().optional(),
-    stock: z.string().refine((val) => !val.includes(".") && parseInt(val) > 1, {
+    stock: z.string().refine((val) => !val.includes(".") && parseInt(val) >= 1, {
         message: "Debes ingresar un número entero y positivo.",
     }),
-    category: z.string().refine((val) => !val.includes("."), {
+    categoryId: z.string().refine((val) => !val.includes("."), {
         message: "Debes seleccionar una categoria.",
     }),
 });
-function EditProductForm({ onProductAdded, product }: { onProductAdded: () => void, product: Product }) {
+function EditProductForm({ onProductAdded, product }: { onProductAdded: () => void; product: Product }) {
+    console.log(product);
     const buttonRef = useRef<HTMLButtonElement>(null);
     const { accessToken } = useAppSelector((state) => state.authReducer);
     const { toast } = useToast();
@@ -53,14 +55,13 @@ function EditProductForm({ onProductAdded, product }: { onProductAdded: () => vo
             price: product.price.toString(),
             tags: product.tags,
             stock: product.stock.toString(),
-            category: product.category?.toString(),
+            categoryId: product.categoryId?.toString(),
         },
     });
-    const {reset} = form;
     const [categories, setCategories] = useState<Category[]>([]);
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch(`${apiUrl}/u/models/category/all`, {
+            const res = await fetch(`${apiUrl}/public/models/category/all`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -74,37 +75,28 @@ function EditProductForm({ onProductAdded, product }: { onProductAdded: () => vo
                 });
             } else {
                 const data = await res.json();
-                reset({
-                    category: data[0].categoryID.toString(),
-                });
                 setCategories(data);
-                console.log(categories);
-                console.log(data);
             }
         };
         fetchData();
     }, []);
     function onSubmit(values: z.infer<typeof formSchema>) {
-        let data: {
-            product: Product;
-            category: number;
-        } = {
-            product: {
-                ...values,
-                sold: 0,
-                rating: 0,
-                category: null,
-                price: parseFloat(values.price),
-                tags: values.tags!,
-                stock: parseInt(values.stock),
-            },
-            category: parseInt(values.category),
+        let productData: Product = {
+            ...values,
+            id: product.id,
+            reviews: 0,
+            sold: 0,
+            rating: 0,
+            categoryId: null,
+            price: parseFloat(values.price),
+            tags: values.tags!,
+            stock: parseInt(values.stock),
         };
-        console.log(data);
+        console.log(productData);
         const fetchData = async () => {
-            const response = await fetch(apiUrl + "/u/models/product/update", {
-                method: "POST",
-                body: JSON.stringify(data),
+            const response = await fetch(apiUrl + "/u/models/product/update/" + values.categoryId, {
+                method: "PUT",
+                body: JSON.stringify(productData),
                 headers: {
                     "Content-type": "application/json; charset=UTF-8",
                     Authorization: `Bearer ${accessToken}`,
@@ -130,7 +122,6 @@ function EditProductForm({ onProductAdded, product }: { onProductAdded: () => vo
         };
         fetchData();
     }
-
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-8">
@@ -222,22 +213,22 @@ function EditProductForm({ onProductAdded, product }: { onProductAdded: () => vo
 
                     <FormField
                         control={form.control}
-                        name="category"
+                        name="categoryId"
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Categoria</FormLabel>
                                 <FormControl>
-                                    <Select onValueChange={field.onChange}>
+                                    <Select value={field.value} onValueChange={field.onChange}>
                                         <FormControl>
                                             <SelectTrigger className="w-[180px]">
-                                                <SelectValue placeholder="Selecciona una categoria" />
+                                                <SelectValue placeholder="Selecciona una categoria"></SelectValue>
                                             </SelectTrigger>
                                         </FormControl>
                                         <SelectContent>
                                             <SelectGroup>
                                                 {categories.map((category) => {
                                                     return (
-                                                        <SelectItem key={category.categoryID} value={category.categoryID + ""}>
+                                                        <SelectItem key={category.id} value={category.id + ""}>
                                                             {category.name}
                                                         </SelectItem>
                                                     );
@@ -251,15 +242,16 @@ function EditProductForm({ onProductAdded, product }: { onProductAdded: () => vo
                         )}
                     />
                 </div>
-                <Button type="submit">Añadir producto</Button>
+                <div className="flex justify-between">
+                    <Button type="submit">Actualizar Producto</Button>
+                    <ModalDeleteProduct productId={product.id!} productName={product.name} onProductDeleted={onProductAdded} />
+                </div>
             </form>
         </Form>
     );
 }
-function ModalUpdateProduct({product, onProductAdded}: {product: Product, onProductAdded: () => void}){
-    return (
-        <EditProductForm onProductAdded={onProductAdded} product={product}/>
-    );
+function ModalUpdateProduct({ product, onProductAdded }: { product: Product; onProductAdded: () => void }) {
+    return <EditProductForm onProductAdded={onProductAdded} product={product} />;
 }
 
 export default ModalUpdateProduct;

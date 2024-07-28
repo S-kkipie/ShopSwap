@@ -13,6 +13,7 @@ import { Separator } from "@/components/ui/separator";
 import { jwtDecode } from "jwt-decode";
 import { GoogleCredential } from "@/Interfaces/GoogleCredential";
 import { verifyGoogleThunk } from "@/store/thunks/auth.thunk";
+import CityAutoComplete from "@/components/CityAutoComplete";
 const formSchema = z.object({
     username: z.string().min(2, {
         message: "El username debe tener al menos 2 caracteres.",
@@ -138,7 +139,9 @@ function Profile() {
                                         <Input placeholder="Tu direccion" {...field} />
                                     </FormControl>
                                     <FormMessage />
+
                                 </FormItem>
+                            
                             )}
                         />
                         <FormField
@@ -165,6 +168,8 @@ function Profile() {
                         </div>
                     </form>
                 </Form>
+                <CityAutoComplete />
+
             </div>
         </div>
     );

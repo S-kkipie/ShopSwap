@@ -1,4 +1,5 @@
 export interface Product {
+    id: number | null; 
     name: string;
     description: string;
     price: number;
@@ -7,5 +8,6 @@ export interface Product {
     stock: number;
     sold: number;
     rating: number;
-    category: number | null;
+    categoryId: number | null;
+    reviews: number | null;
 }

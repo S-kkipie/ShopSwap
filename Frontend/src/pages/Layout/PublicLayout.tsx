@@ -1,19 +1,37 @@
-import { Navigate, Outlet } from "react-router-dom";
 import GeneralNav from "@/components/GeneralNav.tsx";
 import Footer from "@/components/Footer.tsx";
-import { useAppSelector } from "@/store/hooks.ts";
+import { useEffect } from "react";
+import { getUserDataThunk } from "@/store/thunks/getUserData.thunk";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { Outlet } from "react-router-dom";
+import { Toaster } from "@/components/ui/toaster";
+import { useCookies } from "react-cookie";
 
 const PublicLayout = () => {
-    const { isAuth } = useAppSelector((state) => state.authReducer);
+    const dispatch = useAppDispatch();
+    const [, setCookie, remove] = useCookies();
 
-    return !isAuth ? (
+    const { isExpired, accessToken } = useAppSelector((state) => state.authReducer);
+    useEffect(() => {
+        if (isExpired) {
+            remove("accessToken");
+        }
+    }, [isExpired, remove]);
+    useEffect(() => {
+        if (accessToken) {
+            setCookie("accessToken", accessToken, { path: "/" });
+        }
+    }, [accessToken, setCookie]);
+    useEffect(() => {
+        dispatch(getUserDataThunk());
+    }, []);
+    return (
         <div>
             <GeneralNav />
             <Outlet />
             <Footer />
+            <Toaster />
         </div>
-    ) : (
-        <Navigate to="/u" />
     );
 };
 export default PublicLayout;

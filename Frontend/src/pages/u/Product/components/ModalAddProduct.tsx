@@ -33,7 +33,7 @@ const formSchema = z.object({
         message: "Debes ingresar un número.",
     }),
     tags: z.string().optional(),
-    stock: z.string().refine((val) => !val.includes(".") && parseInt(val) > 1, {
+    stock: z.string().refine((val) => !val.includes(".") && parseInt(val) >= 1, {
         message: "Debes ingresar un número entero y positivo.",
     }),
     category: z.string().refine((val) => !val.includes("."), {
@@ -59,7 +59,7 @@ function AddProductForm({ onProductAdded }: { onProductAdded: () => void }) {
     const [categories, setCategories] = useState<Category[]>([]);
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch(`${apiUrl}/u/models/category/all`, {
+            const res = await fetch(`${apiUrl}/public/models/category/all`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -83,18 +83,20 @@ function AddProductForm({ onProductAdded }: { onProductAdded: () => void }) {
     function onSubmit(values: z.infer<typeof formSchema>) {
         let data: {
             product: Product;
-            category: number;
+            categoryId: number;
         } = {
             product: {
                 ...values,
+                reviews: null,
+                id: null,
                 sold: 0,
                 rating: 0,
-                category: null,
+                categoryId: null,
                 price: parseFloat(values.price),
                 tags: values.tags!,
                 stock: parseInt(values.stock),
             },
-            category: parseInt(values.category),
+            categoryId: parseInt(values.category),
         };
         console.log(data);
         const fetchData = async () => {
@@ -233,7 +235,7 @@ function AddProductForm({ onProductAdded }: { onProductAdded: () => void }) {
                                             <SelectGroup>
                                                 {categories.map((category) => {
                                                     return (
-                                                        <SelectItem key={category.categoryID} value={category.categoryID + ""}>
+                                                        <SelectItem key={category.id} value={category.id + ""}>
                                                             {category.name}
                                                         </SelectItem>
                                                     );

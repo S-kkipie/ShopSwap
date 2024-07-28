@@ -22,7 +22,7 @@ function Register() {
             provider: "google",
         };
         dispatch(registerWithGoogleThunk(values));
-        navigate("/u");
+        navigate("/");
     }
 
     return !isAuth ? (
