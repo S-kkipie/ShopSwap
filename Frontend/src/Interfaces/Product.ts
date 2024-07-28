@@ -10,4 +10,6 @@ export interface Product {
     rating: number;
     categoryId: number | null;
     reviews: number | null;
+    modified: Date | null; 
+    created: Date | null; 
 }

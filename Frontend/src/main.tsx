@@ -23,6 +23,7 @@ import UserProductList from "./pages/u/Product/UserProductList";
 import HomePage from "./pages/public/HomePage";
 import ProductDetails from "./pages/public/ProductDetails";
 import CategoryDetails from "./pages/public/CategoryDetails";
+import ProductCrud from "./pages/admin/ProductCrud/ProductCrud";
 const router = createBrowserRouter([
     {
         path: "/",
@@ -90,6 +91,10 @@ const router = createBrowserRouter([
                 path: "admin",
                 element: <AdminLayout />,
                 children: [
+                    {
+                        path: "products",
+                        element : <ProductCrud/>,
+                    },
                     {
                         path: "users",
                         element: <CrudUsers />,

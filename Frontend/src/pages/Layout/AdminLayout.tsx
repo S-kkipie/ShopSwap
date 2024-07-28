@@ -56,6 +56,14 @@ function AdminLayout() {
                 >
                     Dashboard
                 </Link>
+                <Link
+                    className={`transition whitespace-nowrap rounded-md text-sm font-medium h-9 px-4 py-2 justify-start ${
+                        location.pathname.includes('products') ? 'bg-muted' : ''
+                    }`}
+                    to="products"
+                >
+                    Productos
+                </Link>
             </nav>
             <Separator className="mx-2 2xl:hidden" orientation="horizontal"/>
             <Separator className="mx-2 h-auto" orientation="vertical"/>
