@@ -22,13 +22,15 @@ public class UserControllerU {
     public ResponseEntity<MessageResponse> updateSelfUser(@RequestBody User userData, @RequestHeader String authorization) {
         try {
             Long userId = jwtService.getUserIdFromToken(jwtService.getTokenFromHeader(authorization));
-            log.info("User ID: " + userId);
+            log.info("User: " + userData);
             User updatedUser = userRepository.findById(userId).orElseThrow();
             if (!updatedUser.getProvider().equals("google")) {
                 updatedUser.setProvider(userData.getProvider());
             }
             updatedUser.setAddress(userData.getAddress());
             updatedUser.setUsername(userData.getUsername());
+            updatedUser.setCity(userData.getCity());
+            updatedUser.setCountry(userData.getCountry());
             updatedUser.setEmail(userData.getEmail());
             updatedUser.setPicture(userData.getPicture());
             userRepository.save(updatedUser);

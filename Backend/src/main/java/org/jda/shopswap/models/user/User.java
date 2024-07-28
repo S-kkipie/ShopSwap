@@ -35,6 +35,8 @@ public class User implements UserDetails{
     String provider;
     Boolean status;
     String picture;
+    String country;
+    String city;
 
     @OneToMany(mappedBy = "user")
     @JsonManagedReference("user-product")
