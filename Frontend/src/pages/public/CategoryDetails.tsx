@@ -2,10 +2,8 @@ import { useToast } from "@/components/ui/use-toast";
 import { Category } from "@/Interfaces/Category";
 import { Product } from "@/Interfaces/Product";
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import {  useNavigate, useParams } from "react-router-dom";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import CarouselProducts from "@/components/CarouselProducts";
 import { Separator } from "@/components/ui/separator";
 
