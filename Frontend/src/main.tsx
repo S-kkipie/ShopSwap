@@ -20,12 +20,27 @@ import Product from "./pages/u/Product/Product";
 import NewProduct from "./pages/u/Product/NewProduct";
 import CategoryCrud from "./pages/admin/CategoryCrud/CategoryCrud";
 import UserProductList from "./pages/u/Product/UserProductList";
-
+import HomePage from "./pages/public/HomePage";
+import ProductDetails from "./pages/public/ProductDetails";
+import CategoryDetails from "./pages/public/CategoryDetails";
 const router = createBrowserRouter([
     {
         path: "/",
         element: <PublicLayout />,
-        children: [{}],
+        children: [
+            {
+                path: "",
+                element: <HomePage />,
+            },
+            {
+                path: "product/:id",
+                element: <ProductDetails />,
+            },
+            {
+                path: "category/:id",
+                element: <CategoryDetails />,
+            },
+        ],
     },
     {
         path: "/u",
@@ -64,7 +79,8 @@ const router = createBrowserRouter([
                     {
                         path: "newProduct",
                         element: <NewProduct />,
-                    },                  {
+                    },
+                    {
                         path: "productList",
                         element: <UserProductList />,
                     },
@@ -81,7 +97,7 @@ const router = createBrowserRouter([
                     {
                         path: "categories",
                         element: <CategoryCrud />,
-                    }
+                    },
                 ],
             },
         ],

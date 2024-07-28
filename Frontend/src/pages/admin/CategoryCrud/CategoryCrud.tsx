@@ -14,7 +14,7 @@ function CategoryCrud() {
     const { toast } = useToast();
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch(`${apiUrl}/u/models/category/all`, {
+            const res = await fetch(`${apiUrl}/public/models/category/all`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -79,7 +79,7 @@ function CategoryCrud() {
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-200 ">
                                     {categories.map((category) => (
-                                        <TableRow category={category} key={category.categoryID} setRefreshData={setRefreshData} refreshData={refreshData} />
+                                        <TableRow category={category} key={category.id} setRefreshData={setRefreshData} refreshData={refreshData} />
                                     ))}
                                 </tbody>
                             </table>
@@ -98,7 +98,7 @@ function TableRow({ category, setRefreshData, refreshData }: { category: Categor
                 <div className="inline-flex items-center gap-x-3">
                     <input type="checkbox" className="text-blue-500 border-gray-300 rounded " />
                     <div className="flex items-center gap-x-2">
-                        <h2 className="font-medium text-gray-800  ">{category.categoryID}</h2>
+                        <h2 className="font-medium text-gray-800  ">{category.id}</h2>
                     </div>
                 </div>
             </td>
@@ -123,7 +123,7 @@ function TableRow({ category, setRefreshData, refreshData }: { category: Categor
             </td>
             <td className="px-4 py-4 text-sm whitespace-nowrap">
                 <div className="flex items-center gap-x-6">
-                    <ModalConfirmDeleteCategory categoryId={category.categoryID} categoryName={category.name} onCategoryDeleted={() => setRefreshData(!refreshData)} />
+                    <ModalConfirmDeleteCategory categoryId={category.id} categoryName={category.name} onCategoryDeleted={() => setRefreshData(!refreshData)} />
                     <ModalUpdateCategory categoryToUpdate={category} onCategoryUpdated={() => setRefreshData(!refreshData)} />
                 </div>
             </td>

@@ -16,7 +16,7 @@ function UserProductList() {
     };
     useEffect(() => {
         const fetchProducts = async () => {
-            const response = await fetch(`${apiUrl}/u/models/product/all`, {
+            const response = await fetch(`${apiUrl}/u/models/product/myProducts`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",

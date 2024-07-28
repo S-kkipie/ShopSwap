@@ -18,7 +18,7 @@ export default function Login() {
             password: decoded.sub,
         }
         dispatch(loginThunkSpring(values));
-        navigate("/u");
+        navigate("/");
     }
     return !isAuth ? (
 

@@ -14,6 +14,20 @@ function GeneralNav() {
             <Link to="/">
                 <h1 className="text-3xl font-bold text-primary">ShopSwap</h1>
             </Link>
+            <div className="hidden md:flex gap-8 ">
+                {
+                    //TODO add info pages
+                }
+                <Link to="/contact">
+                    <h1 className="transition font-semibold hover:text-primary">Contact</h1>
+                </Link>
+                <Link to="/about">
+                    <h1 className="font-semibold transition hover:text-primary">About</h1>
+                </Link>
+                <Link to="/help">
+                    <h1 className="font-semibold transition hover:text-primary">Help and Support</h1>
+                </Link>
+            </div>
             <div className="hidden lg:flex w-1/3 lg:gap-5">
                 {
                     //TODO add search functionality
