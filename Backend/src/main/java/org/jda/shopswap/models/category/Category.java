@@ -1,7 +1,10 @@
 package org.jda.shopswap.models.category;
 
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
 import org.jda.shopswap.models.product.Product;
@@ -16,11 +19,13 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})})
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
 public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long categoryID;
+    private Long id;
 
     @Column(nullable = false, unique = true)
     private String name;
@@ -29,6 +34,8 @@ public class Category {
     private LocalDateTime modified;
     @OneToMany(mappedBy = "category")
     @JsonManagedReference("category-product")
+    @JsonIgnore
     private Set<Product> products;
+
 
 }
