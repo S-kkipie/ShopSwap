@@ -95,6 +95,7 @@ function EditProductForm({ onProductAdded, product }: { onProductAdded: () => vo
             stock: parseInt(values.stock),
             modified: null,
             created: null,
+            userId: null
         };
         console.log(productData);
         const fetchData = async () => {

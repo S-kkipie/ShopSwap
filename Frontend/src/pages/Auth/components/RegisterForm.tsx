@@ -37,7 +37,11 @@ export function RegisterForm() {
     });
 
     function onSubmit(values: z.infer<typeof formSchema>) {
-        dispatch(registerThunkSpring({ ...values, provider: "Spring", picture: ""}));
+        dispatch(registerThunkSpring({
+            ...values, provider: "Spring", picture: "",
+            city: "",
+            country: ""
+        }));
         navigate("/u");
         console.log(values);
     }

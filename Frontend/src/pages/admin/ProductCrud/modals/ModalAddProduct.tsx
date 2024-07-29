@@ -96,7 +96,8 @@ function AddProductForm({ onProductAdded }: { onProductAdded: () => void }) {
                 tags: values.tags!,
                 stock: parseInt(values.stock),
                 modified: null,
-                created: null
+                created: null,
+                userId: null
             },
             categoryId: parseInt(values.category),
         };

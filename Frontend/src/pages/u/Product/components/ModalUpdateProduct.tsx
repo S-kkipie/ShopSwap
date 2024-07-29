@@ -91,6 +91,9 @@ function EditProductForm({ onProductAdded, product }: { onProductAdded: () => vo
             price: parseFloat(values.price),
             tags: values.tags!,
             stock: parseInt(values.stock),
+            userId: null,
+            modified: null,
+            created: null
         };
         console.log(productData);
         const fetchData = async () => {
