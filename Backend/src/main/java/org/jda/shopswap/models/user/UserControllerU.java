@@ -24,7 +24,7 @@ public class UserControllerU {
             Long userId = jwtService.getUserIdFromToken(jwtService.getTokenFromHeader(authorization));
             log.info("User: " + userData);
             User updatedUser = userRepository.findById(userId).orElseThrow();
-            if (!updatedUser.getProvider().equals("google")) {
+            if (updatedUser.getProvider() != null && !updatedUser.getProvider().equals("google")) {
                 updatedUser.setProvider(userData.getProvider());
             }
             updatedUser.setAddress(userData.getAddress());
@@ -74,7 +74,7 @@ public class UserControllerU {
             Long userId = jwtService.getUserIdFromToken(jwtService.getTokenFromHeader(authorization));
             User updatedUser = userRepository.findById(userId).orElseThrow();
             User equal = userRepository.findByEmail(user.getEmail()).orElse(null);
-            if(equal != null && equal.getId() != userId){
+            if (equal != null && equal.getId() != userId) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El email ya está en uso por otro usuario.");
             }
             updatedUser.setEmail(user.getEmail());
