@@ -95,6 +95,9 @@ function AddProductForm({ onProductAdded }: { onProductAdded: () => void }) {
                 price: parseFloat(values.price),
                 tags: values.tags!,
                 stock: parseInt(values.stock),
+                userId: null,
+                modified: null,
+                created: null
             },
             categoryId: parseInt(values.category),
         };
