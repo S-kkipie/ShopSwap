@@ -81,8 +81,9 @@ function DropDownUser() {
                 <Link to="/u/product/productList">
                     <DropdownMenuItem className="cursor-pointer">Product</DropdownMenuItem>
                 </Link>
-                <DropdownMenuItem>Billing</DropdownMenuItem>
-                <DropdownMenuItem>Subscription</DropdownMenuItem>
+                <Link to="/u/carrito">
+                    <DropdownMenuItem className="cursor-pointer">Carrito</DropdownMenuItem>
+                </Link>
                 <DropdownMenuItem onClick={handleLogout}>Log out</DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>

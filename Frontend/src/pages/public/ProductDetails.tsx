@@ -1,7 +1,7 @@
-import { useToast } from "@/components/ui/use-toast";
+import { toast, useToast } from "@/components/ui/use-toast";
 import { Product } from "@/Interfaces/Product";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 const apiUrl = import.meta.env.VITE_BASE_URL;
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { Category } from "@/Interfaces/Category";
@@ -13,13 +13,21 @@ import { useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useAppSelector } from "@/store/hooks";
+import User from "@/Interfaces/User";
+import CarouselProducts from "@/components/CarouselProducts";
+import { useDispatch } from "react-redux";
+import { addItem } from "@/store/slices/cart.slice";
 
-function MyForm({ maxValue }: { maxValue: number }) {
+function MyForm({ maxValue, product }: { maxValue: number, product: Product}) {
+    const { isAuth } = useAppSelector((state) => state.authReducer);
+    const dispatch = useDispatch();
+
     const formSchema = z.object({
         value: z
             .number()
             .max(maxValue, { message: "La cantidad no puede ser mayor a " + maxValue })
-            .min(0, { message: "La cantidad no puede ser menor a 0" }),
+            .min(1, { message: "La cantidad no puede ser menor a 0" }),
     });
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -28,7 +36,21 @@ function MyForm({ maxValue }: { maxValue: number }) {
         },
     });
     const onSubmit = (values: z.infer<typeof formSchema>) => {
-        console.log(values);
+        if(isAuth){
+            const data = {
+                product: product,
+                quantity: values.value,
+            };
+            dispatch(addItem(data));
+            console.log(data);
+        }else{
+            toast({
+                title: "Inicia sesion para continuar",
+                description: "Debes iniciar sesión para poder comprar",
+                variant: "destructive",
+            });
+        }
+
     };
 
     return (
@@ -73,8 +95,10 @@ function ProductDetails() {
     const navigate = useNavigate();
     const [product, setProduct] = useState<Product | null>(null);
     const { toast } = useToast();
+    const { isAuth, userData } = useAppSelector((state) => state.authReducer);
     const [categoria, setCategoria] = useState<Category>();
-
+    const [productUser, setProductUser] = useState<User>();
+    const [productsOfCategory, setProductsOfCategory] = useState<Product[]>([]);
     useEffect(() => {
         const fetchProduct = async function () {
             const response = await fetch(apiUrl + "/public/models/product/" + param.id);
@@ -99,9 +123,38 @@ function ProductDetails() {
                         navigate("/");
                     } else {
                         const data = await response.json();
+                        const fetchProducts = async function () {
+                            const response = await fetch(apiUrl + "/public/models/product/findByCategory/" + data.id);
+                            if (!response.ok) {
+                                toast({
+                                    title: "Error",
+                                    description: "Ocurrió un error al cargar los productos",
+                                    variant: "destructive",
+                                });
+                            } else {
+                                const data = await response.json();
+                                setProductsOfCategory(data);
+                            }
+                        };
+                        fetchProducts();
                         setCategoria(data);
                     }
                 };
+                const fetchUser = async function () {
+                    const response = await fetch(apiUrl + "/public/models/user/" + data.userId);
+                    if (!response.ok) {
+                        toast({
+                            title: "Error",
+                            description: "Ocurrió un error al cargar el producto.",
+                            variant: "destructive",
+                        });
+                        navigate("/");
+                    } else {
+                        const data = await response.json();
+                        setProductUser(data);
+                    }
+                };
+                fetchUser();
                 fetchCategory();
             }
         };
@@ -109,7 +162,7 @@ function ProductDetails() {
     }, []);
     return (
         <div className="p-6">
-            <Breadcrumb className="m-12">
+            <Breadcrumb className="mx-12 mb-12">
                 <BreadcrumbList>
                     <BreadcrumbItem>
                         <BreadcrumbLink href="/">Home</BreadcrumbLink>
@@ -125,12 +178,15 @@ function ProductDetails() {
                 </BreadcrumbList>
             </Breadcrumb>
             {product ? (
-                <div className="flex mx-48 justify-between">
-                    <div className=" w-5/12 shadow-md">
+                <div className="flex lg:mx-48  justify-between">
+                    <div className=" w-5/12 min-w-[500px] shadow-md">
                         <img className="" src={product.imgUrl} alt={product.name} />
                     </div>
-                    <div className="w-5/12">
+                    <div className="w-5/12 min-w-[500px]">
                         <h1 className="text-3xl font-semibold">{product.name}</h1>
+                        <Link to={"/user/" + product.userId} className="transition-all textlgl hover:text-primary ">
+                            Vendedor: {productUser?.username}
+                        </Link>
                         <div className="flex mt-5">
                             {Array.from({ length: product.rating }).map((_, i) => {
                                 return (
@@ -175,34 +231,30 @@ function ProductDetails() {
                             </div>
                             <Separator />
                             <div className="mt-8">
-                                <MyForm maxValue={product.stock} />
+                                <MyForm maxValue={product.stock} product={product!} />
                             </div>
                             <div className="mt-10">
                                 <div className="border rounded-md p-4  flex flex-col gap-4">
-                                    <div className="flex items-center mb-4">
+                                    <div className="flex items-center gap-3 mb-4">
                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h12l3 3h6v11a2 2 0 01-2 2H5a2 2 0 01-2-2V3z" />
                                         </svg>
                                         <div>
-                                            <h3 className="font-bold">Free Delivery</h3>
-                                            <p>
-                                                <a href="#" className="text-blue-500 underline">
-                                                    Enter your postal code for Delivery Availability
-                                                </a>
-                                            </p>
+                                            <h3 className="font-bold">Delivery</h3>
+                                            <p>{isAuth && userData?.city === productUser?.city ? "Delivery gratis para usuarios de la misma zona" : userData?.country === productUser?.country ? "Delivery a 50$ para usuarios del mismo país" : "Delivery a 300$ para usuarios de todo el mundo"}</p>
                                         </div>
                                     </div>
-                                    <div className="flex items-center">
+                                    <div className="flex gap-3 items-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6h4M9 12h6M5 18h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v9a2 2 0 002 2z" />
                                         </svg>
                                         <div>
-                                            <h3 className="font-bold">Return Delivery</h3>
+                                            <h3 className="font-bold">Devoluciones</h3>
                                             <p>
-                                                Free 30 Days Delivery Returns.{" "}
-                                                <a href="#" className="text-blue-500 underline">
+                                                {isAuth && userData?.city === productUser?.city ? "Devolucion sin problemas para usuarios de la misma zona" : userData?.country === productUser?.country ? "Devolucion legal para usuarios del mismo pais" : "No se aceptan devoluciones en productos internacionales"}
+                                                <Link to="/devoluciones" className="ml-2 text-blue-500 underline">
                                                     Details
-                                                </a>
+                                                </Link>
                                             </p>
                                         </div>
                                     </div>
@@ -214,6 +266,15 @@ function ProductDetails() {
             ) : (
                 <div className="text-center">Cargando...</div>
             )}
+            <Separator className="my-12" />
+            <div className="mx-12">
+                <h1 className="text-2xl mb-8 text-primary font-bold flex items-center">
+                    <div className="bg-primary w-3 h-10 rounded mr-3"></div>Productos Relacionados
+                </h1>
+                <div className="flex gap-8">
+                    <CarouselProducts products={productsOfCategory} />
+                </div>
+            </div>
         </div>
     );
 }

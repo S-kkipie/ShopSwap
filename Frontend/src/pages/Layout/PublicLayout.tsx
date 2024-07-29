@@ -13,18 +13,20 @@ const PublicLayout = () => {
 
     const { isExpired, accessToken } = useAppSelector((state) => state.authReducer);
     useEffect(() => {
-        if (isExpired) {
-            remove("accessToken");
-        }
-    }, [isExpired, remove]);
-    useEffect(() => {
         if (accessToken) {
-            setCookie("accessToken", accessToken, { path: "/" });
+            setCookie("accessToken", accessToken, { path: '/' })
         }
     }, [accessToken, setCookie]);
     useEffect(() => {
-        dispatch(getUserDataThunk());
+        if (isExpired) {
+            remove("accessToken", {
+                path: "/",
+            })
+        }
     }, []);
+    useEffect(() => {
+        dispatch(getUserDataThunk());
+    },[])
     return (
         <div>
             <GeneralNav />

@@ -35,7 +35,12 @@ if (getCookie("accessToken") !== undefined) {
             Authorization: `Bearer ${getCookie("accessToken")!}`,
         },
     })
-        .then((response) => response.json())
+        .then((response) => {
+            if (!response.ok) {
+                return Promise.reject(response.text());
+            }
+            return response.json();
+        })
         .then((data) => {
             initialState = {
                 ...initialState,
@@ -48,15 +53,14 @@ if (getCookie("accessToken") !== undefined) {
                     status: data.status,
                     picture: data.picture,
                     provider: data.provider,
+                    city: data.city,
+                    country: data.country,
                     password: "",
                 },
             };
-            console.log(initialState);
         });
 }
-console.log(getCookie("accessToken") !== undefined ? getCookie("accessToken")! : null);
 
-console.log(initialState);
 export const authSlice = createSlice({
     name: "auth",
     initialState,

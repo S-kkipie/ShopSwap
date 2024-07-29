@@ -9,6 +9,7 @@ export interface Product {
     sold: number;
     rating: number;
     categoryId: number | null;
+    userId : number | null;
     reviews: number | null;
     modified: Date | null; 
     created: Date | null; 

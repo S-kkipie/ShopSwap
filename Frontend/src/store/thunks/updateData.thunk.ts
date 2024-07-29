@@ -11,12 +11,16 @@ export const updateDataThunk = createAsyncThunk(
             address,
             picture,
             accessToken,
+            country,
+            city,
         }: {
             username: string;
             email: string;
             address: string;
             picture: string;
             accessToken: string;
+            country: string;
+            city: string;
         },
         { rejectWithValue }
     ) => {
@@ -26,7 +30,7 @@ export const updateDataThunk = createAsyncThunk(
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${accessToken}`,
             },
-            body: JSON.stringify({ username, email, address, picture }),
+            body: JSON.stringify({ username, email, address, picture, country, city }),
         });
         if (!response.ok) {
             const data = await response.json();
@@ -47,6 +51,8 @@ export const updateDataThunk = createAsyncThunk(
                     email: email,
                     address: address,
                     picture: picture,
+                    city: city,
+                    country: country,
                 },
             };
         }

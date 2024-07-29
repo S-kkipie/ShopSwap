@@ -7,13 +7,29 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "@/store/hooks.ts";
+import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 import { updateDataThunk } from "@/store/thunks/updateData.thunk";
-import { useEffect } from "react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+import { useEffect, useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import { jwtDecode } from "jwt-decode";
 import { GoogleCredential } from "@/Interfaces/GoogleCredential";
 import { verifyGoogleThunk } from "@/store/thunks/auth.thunk";
-import CityAutoComplete from "@/components/CityAutoComplete";
+import { cn } from "@/lib/utils";
+export interface country {
+    iso2: string;
+    iso3: string;
+    country: string;
+    cities: string[];
+}
+export interface Flag {
+    name: string;
+    flag: string;
+    iso2: string;
+    iso3: string;
+}
+
 const formSchema = z.object({
     username: z.string().min(2, {
         message: "El username debe tener al menos 2 caracteres.",
@@ -25,10 +41,40 @@ const formSchema = z.object({
         message: "Debes ingresar un email válido.",
     }),
     picture: z.string().startsWith("https://"),
+    country: z.string({
+        required_error: "Porfavor selecciona un country.",
+    }),
+    city: z.string({
+        required_error: "Please selecciona una city.",
+    }),
 });
 function Profile() {
     const { userData, accessToken } = useAppSelector((state) => state.authReducer);
+
+    const [countrys, setCountrys] = useState<country[]>([]);
+    const [flags, setFlags] = useState<Flag[]>([]);
+    const [citys, setCitys] = useState<string[]>([]);
     const dispatch = useAppDispatch();
+    useEffect(() => {
+        const fetchcountryes = async function () {
+            const response = await fetch("https://countriesnow.space/api/v0.1/countries");
+            if (response.ok) {
+                const data = await response.json();
+                setCountrys(data.data);
+                console.log(data);
+            }
+        };
+        const fetchFlags = async function () {
+            const flagResponse = await fetch("https://countriesnow.space/api/v0.1/countries/flag/images");
+            if (flagResponse.ok) {
+                const data = await flagResponse.json();
+                console.log(data);
+                setFlags(data.data);
+            }
+        };
+        fetchFlags();
+        fetchcountryes();
+    }, []);
     function authGoogle(credentialResponse: CredentialResponse) {
         const decoded = jwtDecode<GoogleCredential>(credentialResponse.credential!);
         const values = {
@@ -48,6 +94,8 @@ function Profile() {
             address: userData?.address || "",
             email: userData?.email || "",
             picture: userData?.picture || "",
+            city: userData?.city || "",
+            country: userData?.country || "",
         },
     });
 
@@ -59,6 +107,8 @@ function Profile() {
             address: userData?.address || "",
             email: userData?.email || "",
             picture: userData?.picture || "",
+            city: userData?.city || "",
+            country: userData?.country || "",
         });
     }, [userData, reset]);
 
@@ -139,9 +189,7 @@ function Profile() {
                                         <Input placeholder="Tu direccion" {...field} />
                                     </FormControl>
                                     <FormMessage />
-
                                 </FormItem>
-                            
                             )}
                         />
                         <FormField
@@ -157,6 +205,101 @@ function Profile() {
                                 </FormItem>
                             )}
                         />
+
+                        <FormField
+                            control={form.control}
+                            name="country"
+                            render={({ field }) => (
+                                <FormItem className="flex flex-col">
+                                    <FormLabel>Country</FormLabel>
+                                    <Popover>
+                                        <PopoverTrigger asChild>
+                                            <FormControl>
+                                                <Button variant="outline" role="combobox" className={cn("w-[200px] justify-between", !field.value && "text-muted-foreground")}>
+                                                    {field.value ? (
+                                                        <p className="flex items-center gap-2 w-full">
+                                                            {countrys.find((country: country) => country.country === field.value)?.country} <img className="h-4 " src={flags.find((flag: Flag) => flag.name === field.value)?.flag} />
+                                                        </p>
+                                                    ) : (
+                                                        "Select Country"
+                                                    )}
+                                                    <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                                </Button>
+                                            </FormControl>
+                                        </PopoverTrigger>
+                                        <PopoverContent className="w-[200px] p-0">
+                                            <Command>
+                                                <CommandInput placeholder="Search language..." className="h-9" />
+                                                <CommandList>
+                                                    <CommandEmpty>No language found.</CommandEmpty>
+                                                    <CommandGroup>
+                                                        {countrys.map((country) => (
+                                                            <CommandItem
+                                                                value={country.country}
+                                                                key={country.country}
+                                                                onSelect={() => {
+                                                                    form.setValue("country", country.country);
+                                                                    setCitys(country.cities);
+                                                                }}
+                                                            >
+                                                                <p className="flex items-center justify-between w-full">
+                                                                    {country.country} <img className="h-4 " src={flags.find((flag: Flag) => flag.name === country.country)?.flag} />
+                                                                </p>
+                                                                <CheckIcon className={cn("ml-auto h-4 w-4", country.country === field.value ? "opacity-100" : "opacity-0")} />
+                                                            </CommandItem>
+                                                        ))}
+                                                    </CommandGroup>
+                                                </CommandList>
+                                            </Command>
+                                        </PopoverContent>
+                                    </Popover>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                        <FormField
+                            control={form.control}
+                            name="city"
+                            render={({ field }) => (
+                                <FormItem className="flex flex-col">
+                                    <FormLabel>City</FormLabel>
+                                    <Popover>
+                                        <PopoverTrigger asChild>
+                                            <FormControl>
+                                                <Button variant="outline" role="combobox" className={`w-[200px] justify-between ${!field.value && "text-muted-foreground"}`}>
+                                                    {field.value || "Select City"}
+                                                    <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                                </Button>
+                                            </FormControl>
+                                        </PopoverTrigger>
+                                        <PopoverContent className="w-[200px] p-0">
+                                            <Command>
+                                                <CommandInput placeholder="Search city..." className="h-9" />
+                                                <CommandList>
+                                                    <CommandEmpty>No city found.</CommandEmpty>
+                                                    <CommandGroup>
+                                                        {citys.map((city) => (
+                                                            <CommandItem
+                                                                value={city}
+                                                                key={city}
+                                                                onSelect={() => {
+                                                                    form.setValue("city", city);
+                                                                }}
+                                                            >
+                                                                <p className="flex items-center justify-between w-full">{city}</p>
+                                                                <CheckIcon className={`ml-auto h-4 w-4 ${city === field.value ? "opacity-100" : "opacity-0"}`} />
+                                                            </CommandItem>
+                                                        ))}
+                                                    </CommandGroup>
+                                                </CommandList>
+                                            </Command>
+                                        </PopoverContent>
+                                    </Popover>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
                         <Separator className="w-full lg:w-5/12" orientation="horizontal" />
                         <div className="flex gap-5">
                             <Button className="mb-8" variant="outline" type="submit">
@@ -168,8 +311,6 @@ function Profile() {
                         </div>
                     </form>
                 </Form>
-                <CityAutoComplete />
-
             </div>
         </div>
     );

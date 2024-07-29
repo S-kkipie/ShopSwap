@@ -10,4 +10,6 @@ export interface Token {
     iat: number;
     exp: number;
     provider: string;
+    city: string;
+    country: string;
 }

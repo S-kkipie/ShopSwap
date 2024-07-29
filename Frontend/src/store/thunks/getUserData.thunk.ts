@@ -34,6 +34,8 @@ export const getUserDataThunk = createAsyncThunk(
                     status: data.status,
                     picture: data.picture,
                     provider: data.provider,
+                    city: data.city,
+                    country: data.country,
                     password: "",
                 };
             } catch (error) {

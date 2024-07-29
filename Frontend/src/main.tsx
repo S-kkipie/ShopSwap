@@ -24,6 +24,9 @@ import HomePage from "./pages/public/HomePage";
 import ProductDetails from "./pages/public/ProductDetails";
 import CategoryDetails from "./pages/public/CategoryDetails";
 import ProductCrud from "./pages/admin/ProductCrud/ProductCrud";
+import UserDetails from "./pages/public/UserDetails";
+import Carrito from "./pages/u/Carrito/Carrito";
+import Checkout from "./pages/u/Checkout/Checkout";
 const router = createBrowserRouter([
     {
         path: "/",
@@ -40,6 +43,10 @@ const router = createBrowserRouter([
             {
                 path: "category/:id",
                 element: <CategoryDetails />,
+            },
+            {
+                path: "user/:id",
+                element: <UserDetails />,
             },
         ],
     },
@@ -88,12 +95,20 @@ const router = createBrowserRouter([
                 ],
             },
             {
+                path: "carrito",
+                element: <Carrito />,
+            },
+            {
+                path: "checkout",
+                element: <Checkout />,
+            },
+            {
                 path: "admin",
                 element: <AdminLayout />,
                 children: [
                     {
                         path: "products",
-                        element : <ProductCrud/>,
+                        element: <ProductCrud />,
                     },
                     {
                         path: "users",

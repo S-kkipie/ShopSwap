@@ -32,6 +32,8 @@ export const loginThunkSpring = createAsyncThunk("auth/loginThunkSpring", async 
                 status: tokenDecoded.status,
                 picture: tokenDecoded.picture,
                 provider: tokenDecoded.provider,
+                city: tokenDecoded.city,
+                country: tokenDecoded.country,
                 password: "",
             },
             accessToken: data.token,
@@ -56,6 +58,8 @@ export const registerThunkSpring = createAsyncThunk(
             address: string;
             picture: string;
             provider: string;
+            city: string;
+            country: string;
         },
         { rejectWithValue }
     ) => {
@@ -85,6 +89,8 @@ export const registerThunkSpring = createAsyncThunk(
                 status: decodeToken.status,
                 picture: decodeToken.picture,
                 provider: decodeToken.provider,
+                city: decodeToken.city,
+                country: decodeToken.country,
                 password: "",
             },
             accessToken: response.token,
@@ -138,6 +144,8 @@ export const registerWithGoogleThunk = createAsyncThunk(
                 status: decodeToken.status,
                 picture: decodeToken.picture,
                 provider: decodeToken.provider,
+                city: decodeToken.city,
+                country: decodeToken.country,
                 password: "",
             },
             accessToken: response.token,
@@ -174,6 +182,8 @@ export const verifyGoogleThunk = createAsyncThunk("auth/verifyGoogleThunk", asyn
             status: data.status,
             picture: data.picture,
             provider: data.provider,
+            city: data.city,
+            country: data.country,
             password: "",
         },
         accessToken: data.token,

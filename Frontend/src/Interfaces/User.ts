@@ -8,4 +8,6 @@ export default interface User {
     password: string;
     picture: string;
     provider: string;
+    city: string;
+    country: string;
 }

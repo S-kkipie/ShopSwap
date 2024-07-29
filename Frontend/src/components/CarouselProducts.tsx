@@ -5,8 +5,12 @@ import { Badge } from "./ui/badge";
 import { Link } from "react-router-dom";
 function CarouselProducts({ products }: { products: Product[] }) {
     return (
-        <Carousel className="w-full  ">
-            <CarouselContent className="-ml-4 w-96  py-3 ">
+        <Carousel className="w-full">
+            <div className="absolute left-14 w-12">
+                <CarouselPrevious className="  " />
+                <CarouselNext className="" />
+            </div>
+            <CarouselContent className="-ml-4 w-96 my-5  py-3 ">
                 {products.map((product, i) => (
                     <CarouselItem className="ml-3 " key={i}>
                         <Card className="transition-all h-full hover:shadow-xl flex flex-col justify-between">
@@ -14,7 +18,7 @@ function CarouselProducts({ products }: { products: Product[] }) {
                                 <img src={product.imgUrl} alt={product.name} className="object-cover" />
                             </CardHeader>
                             <CardContent className="mt-auto flex flex-col gap-2">
-                                <h1 className="text-3xl font-semibold">{product.name}</h1>
+                                <p className="text-3xl font-semibold">{product.name}</p>
 
                                 <div className="flex items-center justify-between">
                                     {
@@ -66,8 +70,6 @@ function CarouselProducts({ products }: { products: Product[] }) {
                     </CarouselItem>
                 ))}
             </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
         </Carousel>
     );
 }
