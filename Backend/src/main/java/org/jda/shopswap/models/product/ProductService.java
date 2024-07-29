@@ -1,5 +1,6 @@
 package org.jda.shopswap.models.product;
 
+
 import lombok.RequiredArgsConstructor;
 import org.jda.shopswap.jwt.JwtService;
 import org.jda.shopswap.models.category.Category;

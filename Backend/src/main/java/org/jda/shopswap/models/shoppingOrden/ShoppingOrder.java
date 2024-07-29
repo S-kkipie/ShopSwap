@@ -19,12 +19,12 @@ public class ShoppingOrder {
     private Long orderID;
 
     @ManyToOne
-    @JoinColumn(name = "payment_ID")
-    private Payment payment;
+    @JoinColumn(name = "seller")
+    private User seller;
 
     @ManyToOne
-    @JoinColumn(name = "user_ID")
-    private User user;
+    @JoinColumn(name = "costomer")
+    private User userCostumer;
 
     @ManyToOne
     @JoinColumn(name = "product_ID")
