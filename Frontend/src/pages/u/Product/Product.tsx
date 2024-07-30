@@ -12,9 +12,9 @@ function Product() {
                         className={`transition whitespace-nowrap rounded-md text-sm font-medium h-9 px-4 py-2 justify-start ${
                             location.pathname.includes('/newProduct') ? 'bg-muted' : ''
                         }`}
-                        to="newProduct"
+                        to="myOrders"
                     >
-                        Agregar un Producto
+                        Mis compras
                     </Link>
                     <Link
                         className={`transition whitespace-nowrap rounded-md text-sm font-medium h-9 px-4 py-2 justify-start ${

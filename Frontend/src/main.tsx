@@ -17,7 +17,6 @@ import Appareance from "@/pages/u/Settings/Appareance.tsx";
 import DashboardConf from "@/pages/u/Settings/DashboardConf.tsx";
 import ChangePassword from "./pages/u/Settings/ChangePassword";
 import Product from "./pages/u/Product/Product";
-import NewProduct from "./pages/u/Product/NewProduct";
 import CategoryCrud from "./pages/admin/CategoryCrud/CategoryCrud";
 import UserProductList from "./pages/u/Product/UserProductList";
 import HomePage from "./pages/public/HomePage";
@@ -27,10 +26,14 @@ import ProductCrud from "./pages/admin/ProductCrud/ProductCrud";
 import UserDetails from "./pages/public/UserDetails";
 import Carrito from "./pages/u/Carrito/Carrito";
 import Checkout from "./pages/u/Checkout/Checkout";
+import NotFound from "./pages/public/NotFound";
+import ShoppingOrderDetails from "./pages/u/ShoppingOrder/ShoppingOrderDetails";
+import MyOrders from "./pages/u/ShoppingOrder/MyOrders";
 const router = createBrowserRouter([
     {
         path: "/",
         element: <PublicLayout />,
+        errorElement: <NotFound />,
         children: [
             {
                 path: "",
@@ -53,6 +56,7 @@ const router = createBrowserRouter([
     {
         path: "/u",
         element: <PrivateLayout />,
+        errorElement: <NotFound />,
         children: [
             {
                 path: "settings",
@@ -85,8 +89,8 @@ const router = createBrowserRouter([
                 element: <Product />,
                 children: [
                     {
-                        path: "newProduct",
-                        element: <NewProduct />,
+                        path: "myOrders",
+                        element: <MyOrders />,
                     },
                     {
                         path: "productList",
@@ -94,6 +98,7 @@ const router = createBrowserRouter([
                     },
                 ],
             },
+
             {
                 path: "carrito",
                 element: <Carrito />,
@@ -101,6 +106,10 @@ const router = createBrowserRouter([
             {
                 path: "checkout",
                 element: <Checkout />,
+            },
+            {
+                path: "shoppingOrder/:id",
+                element: <ShoppingOrderDetails />,
             },
             {
                 path: "admin",
@@ -124,10 +133,13 @@ const router = createBrowserRouter([
     },
     {
         path: "/login",
+        errorElement: <NotFound />,
+
         element: <Login />,
     },
     {
         path: "/register",
+        errorElement: <NotFound />,
         element: <Register />,
     },
 ]);
