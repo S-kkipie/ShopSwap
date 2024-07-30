@@ -42,7 +42,7 @@ function UserDetails() {
             }
         };
         fetchUser();
-    }, []);
+    }, [param]);
     return (
         <div className="px-16 py-8">
             <Breadcrumb className="mb-5">
