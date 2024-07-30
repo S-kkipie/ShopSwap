@@ -159,7 +159,7 @@ function ProductDetails() {
             }
         };
         fetchProduct();
-    }, []);
+    }, [param]);
     return (
         <div className="p-6">
             <Breadcrumb className="mx-12 mb-12">
