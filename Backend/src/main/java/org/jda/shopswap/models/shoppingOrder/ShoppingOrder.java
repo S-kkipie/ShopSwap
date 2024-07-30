@@ -1,5 +1,8 @@
 package org.jda.shopswap.models.shoppingOrder;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
 import org.jda.shopswap.models.product.Product;
@@ -13,6 +16,10 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.None.class,
+        property = "id"
+)
 public class ShoppingOrder {
 
     @Id
@@ -30,13 +37,10 @@ public class ShoppingOrder {
     @Column(name = "customer_id")
     private Long customerId;
 
-    @ManyToMany
-    @JoinTable(
-            name = "order_products",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
-    private List<Product> products;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderProduct> orderProducts;
+
     private double finalAmount;
     private LocalDateTime created;
     private LocalDateTime modified;

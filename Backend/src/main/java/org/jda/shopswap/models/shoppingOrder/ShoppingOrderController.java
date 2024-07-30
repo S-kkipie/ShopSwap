@@ -14,7 +14,7 @@ public class ShoppingOrderController {
     private final ShoppingOrderService shoppingOrderService;
 
     @PostMapping("/new")
-    public ResponseEntity<ShoppingOrder> newShoppingOrder(@RequestBody List<ProductQuantity> products, @RequestHeader String authorization) {
+    public ResponseEntity<ShoppingOrder> newShoppingOrder(@RequestBody List<ProductRequest> products, @RequestHeader String authorization) {
         ShoppingOrder shoppingOrder = shoppingOrderService.newShoppingOrder(products, authorization);
         if (shoppingOrder == null) {
             return ResponseEntity.badRequest().build();
