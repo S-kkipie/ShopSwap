@@ -31,6 +31,8 @@ public class User implements UserDetails{
     Long userCreatedId;
     Long userModifiedId;
     String password;
+    Double money;
+
     @Enumerated(EnumType.STRING)
     Role role;
     String provider;

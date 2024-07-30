@@ -39,6 +39,7 @@ public class AuthService {
                 .address(request.getAddress())
                 .picture(request.getPicture())
                 .provider(request.getProvider())
+                .money(0.0)
                 .role(Role.USER)
                 .status(true)
                 .build();

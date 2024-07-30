@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.jda.shopswap.models.payment.Payment;
 import org.jda.shopswap.models.product.Product;
-import org.jda.shopswap.models.shoppingOrden.ShoppingOrder;
+import org.jda.shopswap.models.shoppingOrder.ShoppingOrder;
 import org.jda.shopswap.models.user.User;
 
 import java.time.LocalDateTime;
