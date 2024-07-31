@@ -60,4 +60,15 @@ public class ProductControllerU {
             return ResponseEntity.badRequest().body(ex.getMessage());
         }
     }
+    @PutMapping("/addReview")
+    public ResponseEntity<Product> addReview(@RequestBody ProductReviewRequest productReviewRequest) {
+        Product product = productRepository.findById(productReviewRequest.getProductId()).orElse(null);
+        if (product == null) {
+            return ResponseEntity.notFound().build();
+        }
+        product.setReviews(product.getReviews() + 1);
+        product.setRating((product.getRating() + productReviewRequest.getRating()) / product.getReviews());
+        productRepository.save(product);
+        return ResponseEntity.ok(product);
+    }
 }
