@@ -99,7 +99,7 @@ function EditProductForm({ onProductAdded, product }: { onProductAdded: () => vo
         };
         console.log(productData);
         const fetchData = async () => {
-            const response = await fetch(apiUrl + "/admin /models/product/update/" + values.categoryId, {
+            const response = await fetch(apiUrl + "/admin/models/product/update/" + values.categoryId, {
                 method: "PUT",
                 body: JSON.stringify(productData),
                 headers: {
