@@ -2,10 +2,13 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form.tsx";
+const apiUrl = import.meta.env.VITE_BASE_URL;
 
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { useAppSelector } from "@/store/hooks";
+import { toast } from "@/components/ui/use-toast";
 const passwordSchema = z
     .object({
         currentPassword: z.string(),
@@ -23,12 +26,37 @@ const passwordSchema = z
         path: ["confirmNewPassword"],
     });
 export default function ChangePassword() {
+    const { accessToken } = useAppSelector((state) => state.authReducer);
     const form = useForm({
         resolver: zodResolver(passwordSchema),
     });
 
     const onSubmit = (data: any) => {
         console.log(data);
+        const dataTofecth = {
+            oldPassword: data.currentPassword,
+            newPassword: data.newPassword,
+        };
+        const fetchChangePassword = async () => {
+            const response = await fetch(apiUrl + "/u/models/user/changePassword", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + accessToken,
+                },
+                body: JSON.stringify(dataTofecth),
+            });
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data);
+                toast({
+                    title: "Contraseña cambiada",
+                    description: "Tu contraseña ha sido cambiada con éxito",
+                    variant: "success",
+                });
+            }
+        };
+        fetchChangePassword();
     };
     return (
         <div className=" lg:w-9/12 md:h-full   p-8 lg:py-10 lg:px-20  bg-white/80 shadow-xl rounded-xl border">
