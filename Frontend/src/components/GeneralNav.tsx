@@ -78,8 +78,11 @@ function DropDownUser() {
                         <DropdownMenuItem>ShopSwap Admin</DropdownMenuItem>
                     </Link>
                 )}
-                <Link to="/u/product/productList">
-                    <DropdownMenuItem className="cursor-pointer">Product</DropdownMenuItem>
+                <Link to="/u/account/billings">
+                    <DropdownMenuItem className="cursor-pointer">Finanzas</DropdownMenuItem>
+                </Link>
+                <Link to="/u/account/productList">
+                    <DropdownMenuItem className="cursor-pointer">Account</DropdownMenuItem>
                 </Link>
                 <Link to="/u/carrito">
                     <DropdownMenuItem className="cursor-pointer">Carrito</DropdownMenuItem>

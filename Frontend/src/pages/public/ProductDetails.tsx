@@ -18,8 +18,9 @@ import User from "@/Interfaces/User";
 import CarouselProducts from "@/components/CarouselProducts";
 import { useDispatch } from "react-redux";
 import { addItem } from "@/store/slices/cart.slice";
-
-function MyForm({ maxValue, product }: { maxValue: number, product: Product}) {
+import { Rating } from "@smastrom/react-rating";
+import "@smastrom/react-rating/style.css";
+function MyForm({ maxValue, product }: { maxValue: number; product: Product }) {
     const { isAuth } = useAppSelector((state) => state.authReducer);
     const dispatch = useDispatch();
 
@@ -36,21 +37,20 @@ function MyForm({ maxValue, product }: { maxValue: number, product: Product}) {
         },
     });
     const onSubmit = (values: z.infer<typeof formSchema>) => {
-        if(isAuth){
+        if (isAuth) {
             const data = {
                 product: product,
                 quantity: values.value,
             };
             dispatch(addItem(data));
             console.log(data);
-        }else{
+        } else {
             toast({
                 title: "Inicia sesion para continuar",
                 description: "Debes iniciar sesión para poder comprar",
                 variant: "destructive",
             });
         }
-
     };
 
     return (
@@ -93,6 +93,8 @@ function MyForm({ maxValue, product }: { maxValue: number, product: Product}) {
 function ProductDetails() {
     const param = useParams();
     const navigate = useNavigate();
+    const { accessToken } = useAppSelector((state) => state.authReducer);
+    const [isRated, setIsRated] = useState(false);
     const [product, setProduct] = useState<Product | null>(null);
     const { toast } = useToast();
     const { isAuth, userData } = useAppSelector((state) => state.authReducer);
@@ -152,6 +154,7 @@ function ProductDetails() {
                     } else {
                         const data = await response.json();
                         setProductUser(data);
+                        window.scrollTo(0, 0);
                     }
                 };
                 fetchUser();
@@ -160,6 +163,57 @@ function ProductDetails() {
         };
         fetchProduct();
     }, [param]);
+    function onRatingChange(value: number) {
+        console.log(isRated);
+        if (!isAuth) {
+            toast({
+                title: "Inicia sesion para continuar",
+                description: "Debes iniciar sesión para poder calificar el producto",
+                variant: "destructive",
+            });
+            return;
+        }
+        if (isRated) {
+            toast({
+                title: "Ya has calificado este producto",
+                description: "No puedes calificar el producto dos veces",
+                variant: "destructive",
+            });
+            return;
+        }
+        const fetchRating = async function () {
+            const response = await fetch(apiUrl + "/u/models/product/addReview", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${accessToken}`,
+                },
+                body: JSON.stringify({
+                    productId: product?.id,
+                    rating: value,
+                }),
+            });
+            if (!response.ok) {
+                toast({
+                    title: "Error",
+                    description: "Ocurrió un error al calificar el producto.",
+                    variant: "destructive",
+                });
+            } else {
+                const data = await response.json();
+                setProduct(data);
+                console.log(data);
+                toast({
+                    title: "Calificacion exitosa",
+                    description: "Gracias por calificar el producto",
+                    variant: "success",
+                });
+                setIsRated(true);
+            }
+        };
+        fetchRating();
+        console.log(value);
+    }
     return (
         <div className="p-6">
             <Breadcrumb className="mx-12 mb-12">
@@ -188,27 +242,7 @@ function ProductDetails() {
                             Vendedor: {productUser?.username}
                         </Link>
                         <div className="flex mt-5">
-                            {Array.from({ length: product.rating }).map((_, i) => {
-                                return (
-                                    <span key={i}>
-                                        <svg width="25" height="25" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                            <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" fill="gold" stroke="gold" strokeWidth="1" />
-                                        </svg>
-                                    </span>
-                                );
-                            })}
-                            {Array.from({ length: 5 - product.rating }).map((_, i) => {
-                                return (
-                                    <span key={i}>
-                                        <svg width="25" height="25" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                            <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" stroke="black" fill="none" strokeWidth="1" />
-                                        </svg>
-                                    </span>
-                                );
-                            })}
-                            {
-                                //TODO add reviews
-                            }
+                            <Rating style={{ maxWidth: 150 }} value={Math.round(product.rating)} onChange={onRatingChange} />
                             <span className="text-sm ml-2 text-gray-400">({product.reviews}) reviews</span>
                             <Separator className="h-auto ml-12" orientation="vertical" />
                             <div className="ml-12">

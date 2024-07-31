@@ -39,6 +39,8 @@ function CategoryDetails() {
                     } else {
                         const data = await response.json();
                         console.log(data);
+                        window.scrollTo(0, 0);
+
                         setProducts(data);
                     }
                 };

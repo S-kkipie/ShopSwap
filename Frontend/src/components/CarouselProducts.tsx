@@ -3,6 +3,9 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { Product } from "@/Interfaces/Product";
 import { Badge } from "./ui/badge";
 import { Link } from "react-router-dom";
+import { Rating } from "@smastrom/react-rating";
+import "@smastrom/react-rating/style.css";
+
 function CarouselProducts({ products }: { products: Product[] }) {
     return (
         <Carousel className="w-full">
@@ -19,35 +22,9 @@ function CarouselProducts({ products }: { products: Product[] }) {
                             </CardHeader>
                             <CardContent className="mt-auto flex flex-col gap-2">
                                 <p className="text-3xl font-semibold">{product.name}</p>
-
                                 <div className="flex items-center justify-between">
-                                    {
-                                        //TODO add rating
-                                    }
-                                    <div className="flex ">
-                                        {Array.from({ length: product.rating }).map((_, i) => {
-                                            return (
-                                                <span key={i}>
-                                                    <svg width="25" height="25" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                        <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" fill="gold" stroke="gold" strokeWidth="1" />
-                                                    </svg>
-                                                </span>
-                                            );
-                                        })}
-                                        {Array.from({ length: 5 - product.rating }).map((_, i) => {
-                                            return (
-                                                <span key={i}>
-                                                    <svg width="25" height="25" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                        <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" stroke="black" fill="none" strokeWidth="1" />
-                                                    </svg>
-                                                </span>
-                                            );
-                                        })}
-                                        {
-                                            //TODO add reviews
-                                        }
-                                        <span className="text-sm ml-2 text-gray-400">({product.reviews}) reviews</span>
-                                    </div>
+                                    <Rating style={{ maxWidth: 150 }} value={product.rating} readOnly />
+                                    <span className="text-sm ml-2 text-gray-400">({product.reviews}) reviews</span>
                                     <span className="text-primary text-xl font-bold">${product.price}</span>
                                 </div>
                                 <CardDescription>

@@ -8,17 +8,15 @@ import Register from "@/pages/Auth/pages/Register.tsx";
 import { store } from "@/store/store.ts";
 import { Provider } from "react-redux";
 import PrivateLayout from "@/pages/Layout/PrivateLayout.tsx";
-import Settings from "@/pages/u/Settings/Settings.tsx";
 import CrudUsers from "@/pages/admin/UsersCrud/CrudUsers.tsx";
 import AdminLayout from "@/pages/Layout/AdminLayout.tsx";
-import Profile from "@/pages/u/Settings/Profile.tsx";
-import Cuenta from "@/pages/u/Settings/Cuenta.tsx";
-import Appareance from "@/pages/u/Settings/Appareance.tsx";
-import DashboardConf from "@/pages/u/Settings/DashboardConf.tsx";
+import Profile from "@/pages/u/Settings/Profile";
+import Cuenta from "@/pages/u/Settings/Cuenta";
+import Appareance from "@/pages/u/Settings/Appareance";
+import DashboardConf from "@/pages/u/Settings/DashboardConf";
 import ChangePassword from "./pages/u/Settings/ChangePassword";
-import Product from "./pages/u/Product/Product";
 import CategoryCrud from "./pages/admin/CategoryCrud/CategoryCrud";
-import UserProductList from "./pages/u/Product/UserProductList";
+import UserProductList from "./pages/u/Account/UserProductList";
 import HomePage from "./pages/public/HomePage";
 import ProductDetails from "./pages/public/ProductDetails";
 import CategoryDetails from "./pages/public/CategoryDetails";
@@ -29,6 +27,10 @@ import Checkout from "./pages/u/Checkout/Checkout";
 import NotFound from "./pages/public/NotFound";
 import ShoppingOrderDetails from "./pages/u/ShoppingOrder/ShoppingOrderDetails";
 import MyOrders from "./pages/u/ShoppingOrder/MyOrders";
+import Account from "./pages/u/Account/Account";
+import Settings from "./pages/u/Settings/Settings";
+import Billings from "./pages/u/Billings/Billings";
+import MySales from "./pages/u/Sales/MySales";
 const router = createBrowserRouter([
     {
         path: "/",
@@ -85,8 +87,8 @@ const router = createBrowserRouter([
                 ],
             },
             {
-                path: "product",
-                element: <Product />,
+                path: "account",
+                element: <Account/>,
                 children: [
                     {
                         path: "myOrders",
@@ -96,6 +98,14 @@ const router = createBrowserRouter([
                         path: "productList",
                         element: <UserProductList />,
                     },
+                    {
+                        path: "billings",
+                        element: <Billings />,
+                    },
+                    {
+                        path: "mySales",
+                        element: <MySales />,
+                    }
                 ],
             },
 

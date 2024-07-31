@@ -10,4 +10,5 @@ export default interface User {
     provider: string;
     city: string;
     country: string;
+    money: number;
 }

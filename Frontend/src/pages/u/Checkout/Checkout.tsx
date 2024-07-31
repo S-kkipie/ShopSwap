@@ -55,7 +55,7 @@ function Checkout() {
             console.log(data);
             dispatch(clearCart());
             // navigate("/u/shoppingOrder/" + data.id);
-            navigate("/u/product/myOrders");
+            navigate("/u/account/myOrders");
         };
         fetchShoppingOrder();
 

@@ -79,7 +79,9 @@ function CrudUsers() {
                                                 </svg>
                                             </button>
                                         </th>
-
+                                        <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 ">
+                                            Money
+                                        </th>
                                         <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 ">
                                             Password
                                         </th>
@@ -143,6 +145,7 @@ function TableRow({ user, setRefreshData, refreshData }: { user: User; setRefres
                 </div>
             </td>
             <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">{user.role}</td>
+            <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">S/.{user.money}</td>
             <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">{user.password}</td>
             <td className="px-4 py-4 text-sm whitespace-nowrap">
                 <div className="flex items-center gap-x-6">

@@ -12,4 +12,5 @@ export interface Token {
     provider: string;
     city: string;
     country: string;
+    money: number;
 }

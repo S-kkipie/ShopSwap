@@ -33,42 +33,42 @@ function HomePage() {
             <div className="mb-10 flex flex-col lg:flex-row h-auto gap-10 items-center lg:items-stretch justify-center">
                 <ul className="mx-8 h-auto lg:w-40 justify-center flex item lg:flex-col gap-5 lg:gap-3">
                     <li>
-                        <Link className="font-semibold transition hover:text-primary" to="">
+                        <Link className="font-semibold transition hover:text-primary" to="/category/1">
                             Woman´s Fashion
                         </Link>
                     </li>
                     <li>
-                        <Link className="font-semibold transition hover:text-primary" to="">
+                        <Link className="font-semibold transition hover:text-primary" to="/category/2">
                             Men´s Fashion
                         </Link>
                     </li>
                     <li>
-                        <Link className="font-semibold transition hover:text-primary" to="">
+                        <Link className="font-semibold transition hover:text-primary" to="/category/3">
                             Home & Lifestyle
                         </Link>
                     </li>
                     <li>
-                        <Link className="font-semibold transition hover:text-primary" to="">
+                        <Link className="font-semibold transition hover:text-primary" to="/category/5">
                             Electronics & Appliances
                         </Link>
                     </li>
                     <li>
-                        <Link className="font-semibold transition hover:text-primary" to="">
+                        <Link className="font-semibold transition hover:text-primary" to="/category/6">
                             Medicine & Groceries
                         </Link>
                     </li>
                     <li>
-                        <Link className="font-semibold transition hover:text-primary" to="">
+                        <Link className="font-semibold transition hover:text-primary" to="/category/4">
                             Baby´s & Toys
                         </Link>
                     </li>
                     <li>
-                        <Link className="font-semibold transition hover:text-primary" to="">
+                        <Link className="font-semibold transition hover:text-primary" to="/category/7">
                             Healt & Beauty
                         </Link>
                     </li>
                     <li>
-                        <Link className="font-semibold transition hover:text-primary" to="">
+                        <Link className="font-semibold transition hover:text-primary" to="/category/8">
                             Sports & Outdoor
                         </Link>
                     </li>

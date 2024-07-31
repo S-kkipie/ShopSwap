@@ -55,6 +55,7 @@ if (getCookie("accessToken") !== undefined) {
                     provider: data.provider,
                     city: data.city,
                     country: data.country,
+                    money: data.money,
                     password: "",
                 },
             };

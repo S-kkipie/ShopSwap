@@ -35,6 +35,7 @@ export const getUserDataThunk = createAsyncThunk(
                     picture: data.picture,
                     provider: data.provider,
                     city: data.city,
+                    money: data.money,
                     country: data.country,
                     password: "",
                 };

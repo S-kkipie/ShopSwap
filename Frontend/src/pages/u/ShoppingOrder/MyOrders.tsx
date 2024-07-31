@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/components/ui/use-toast";
 import { ShoppingOrder } from "@/Interfaces/ShoppingOrder";
@@ -37,54 +38,44 @@ function MyOrders() {
         <div className=" flex flex-col gap-8">
             {orders.map((order) => {
                 return (
-                    <div className="flex flex-col" key={order.id}>
-                        <Link to={"/u/shoppingOrder/" + order.id} className="">
-                            <div className="transition-all shadow h-[500px]  hover:shadow-md flex gap-10 px-3 py-2">
+                    <div className="flex w-[400px]  flex-col" key={order.id}>
+                        <div className="transition-all shadow  rounded-xl h-full hover:shadow-md">
+                            <div className="bg-muted px-4 py-2 flex justify-between items-center">
                                 <div>
-                                    <div className="mt-4">
-                                        <h3 className="text-sm text-muted-foreground ">ID de la compra </h3>
-                                        <h1 className="text-md font-semibold">{order.id}</h1>
-                                    </div>
-                                    <div className="mt-4">
-                                        <h3 className="text-sm text-muted-foreground ">ID del comprador </h3>
-                                        <h1 className="text-md font-semibold">{order.customerId}</h1>
-                                    </div>
-                                    <div className="mt-4">
-                                        <h3 className="text-sm text-muted-foreground ">Pago total </h3>
-                                        <h1 className="text-md font-semibold">S/.{order.finalAmount}</h1>
-                                    </div>
-                                    <div className="mt-4">
-                                        <h3 className="text-sm text-muted-foreground ">Fecha </h3>
-                                        <h1 className="text-md font-semibold">
-                                            {new Date(order.created).toLocaleString("es-ES", {
-                                                year: "numeric",
-                                                month: "2-digit",
-                                                day: "2-digit",
-                                                hour: "2-digit",
-                                                minute: "2-digit",
-                                                second: "2-digit",
-                                            })}
-                                        </h1>
-                                    </div>
+                                    <p className="text-lg font-semibold">Pedido #{order.id}</p>
+                                    <p className="text-sm">
+                                        Fecha:{" "}
+                                        {new Date(order.created).toLocaleString("es-ES", {
+                                            year: "numeric",
+                                            month: "2-digit",
+                                            day: "2-digit",
+                                        })}
+                                    </p>
                                 </div>
-                                <Separator orientation="vertical" />
-                                <div className=" px-8 flex">
-                                    {
-                                        order.orderProducts.map((productOrder, index) => {
-                                            return (
-                                                <div key={index} className="h-full px-8 py-5">
-                                                    <h1 className="text-md font-semibold">{productOrder.product.name}</h1>
-                                                    <h1>S/.{productOrder.product.price}</h1>
-                                                    <h1>Cantidad: {productOrder.quantity}</h1>
-                                                    <img src={productOrder.product.imgUrl} alt={productOrder.product.name} className="w-full h-5/6 object-cover" />
-                                                </div>
-                                                
-                                            );
-                                        })
-                                    }
-                                </div>
+                                <Link to={"/u/shoppingOrder/" + order.id} className=""><Button variant="outline">Ver mas detalles</Button></Link>
                             </div>
-                        </Link>
+                            <Separator />
+                            <div className="px-4 py-2">
+                                <h1 className="font-semibold">Detalles del pedido</h1>
+                                {order.orderProducts.map((product) => {
+                                    return (
+                                        <div key={product.product.id} className="flex ">
+                                            <div className="flex gap-5 w-full justify-between">
+                                                <p>
+                                                    {product.product.name} x {product.quantity}{" "}
+                                                </p>
+                                                <p>${product.product.price * product.quantity}</p>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                            <Separator />
+                            <div className="px-4 py-2 flex justify-between">
+                                <p className="font-semibold">Total: </p>
+                                <p>${order.finalAmount}</p>
+                            </div>
+                        </div>
                     </div>
                 );
             })}

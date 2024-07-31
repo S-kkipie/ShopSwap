@@ -68,7 +68,7 @@ function Register() {
             </div>
         </div>
     ) : (
-        <Navigate replace to="/u" />
+        <Navigate replace to="/" />
     );
 }
 
