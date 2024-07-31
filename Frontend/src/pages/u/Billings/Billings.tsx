@@ -3,12 +3,10 @@ import { ShoppingOrder } from "@/Interfaces/ShoppingOrder";
 import { useAppSelector } from "@/store/hooks";
 import { useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
-import { set } from "react-hook-form";
 const apiUrl = import.meta.env.VITE_BASE_URL;
 
 function Billings() {
     const { userData, accessToken } = useAppSelector((state) => state.authReducer);
-    const [orders, setOrders] = useState<ShoppingOrder[]>([]);
     const { toast } = useToast();
     const [charData, setChartData] = useState<any[]>([]);
 
@@ -43,7 +41,6 @@ function Billings() {
                     }),
                 ];
                 setChartData(chartData);
-                setOrders(data);
             }
         };
         fetchOrders();
