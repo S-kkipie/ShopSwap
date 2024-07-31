@@ -15,7 +15,7 @@ import { Separator } from "./ui/separator";
 import { DoubleArrowDownIcon } from "@radix-ui/react-icons";
 
 function GeneralNav() {
-    const { isAuth } = useAppSelector((state) => state.authReducer);
+    const { userData, isAuth } = useAppSelector((state) => state.authReducer);
     const [products, setProducts] = useState<Product[]>([]);
     const [categories, setCategories] = useState<Category[]>([]);
     const [users, setUsers] = useState<User[]>([]);
@@ -144,7 +144,9 @@ function GeneralNav() {
                     {users.length > 0 || products.length > 0 || categories.length > 0 ? <SearchResult products={products} categories={categories} users={users} /> : null}
                 </div>
             </div>
-            {isAuth ? <DropDownUser /> : <LoginOrRegister />}
+            {isAuth ? <>
+            <p>${userData.money}</p>
+            <DropDownUser /> </>: <LoginOrRegister />}
         </nav>
     );
 }
