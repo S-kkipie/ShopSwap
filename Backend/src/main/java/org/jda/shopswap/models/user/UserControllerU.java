@@ -42,14 +42,14 @@ public class UserControllerU {
     }
 
     @PutMapping("/changePassword")
-    public ResponseEntity<MessageResponse> changePassword(@RequestBody String lastPassword, @RequestBody String newPassword, @RequestHeader String authorization) {
+    public ResponseEntity<MessageResponse> changePassword(@RequestBody PasswordChangeRequest passwordChangeRequest, @RequestHeader String authorization) {
         try {
             Long userId = jwtService.getUserIdFromToken(jwtService.getTokenFromHeader(authorization));
             User updatedUser = userRepository.findById(userId).orElseThrow();
-            if (!updatedUser.getPassword().equals(passwordEncoder.encode(lastPassword))) {
+            if (!updatedUser.getPassword().equals(passwordEncoder.encode(passwordChangeRequest.oldPassword))) {
                 return ResponseEntity.badRequest().body(new MessageResponse("Contraseña anterior incorrecta"));
             }
-
+            updatedUser.setPassword(passwordEncoder.encode(passwordChangeRequest.newPassword));
             return ResponseEntity.ok(new MessageResponse("Contraseña actualizada correctamente"));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new MessageResponse("No se encontro el usuario a actualizar"));
