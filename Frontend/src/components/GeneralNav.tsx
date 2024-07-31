@@ -145,7 +145,6 @@ function GeneralNav() {
                 </div>
             </div>
             {isAuth ? <>
-            <p>${userData.money}</p>
             <DropDownUser /> </>: <LoginOrRegister />}
         </nav>
     );
