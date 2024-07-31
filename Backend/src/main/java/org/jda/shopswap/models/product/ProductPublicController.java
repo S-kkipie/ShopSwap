@@ -56,5 +56,13 @@ public class ProductPublicController {
         return ResponseEntity.ok(products);
     }
 
+    @GetMapping("/search/{name}")
+    public ResponseEntity<List<Product>> searchProduct(@PathVariable String name) {
+        List<Product> products = productRepository.findAllByNameContaining(name);
+        if (products == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(products);
+    }
 
 }

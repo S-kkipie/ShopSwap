@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/public/models/user")
@@ -29,5 +31,15 @@ public class UserControllerPublic {
                 .role(user.getRole())
                 .build();
         return ResponseEntity.ok(userToReturn);
+    }
+
+    @GetMapping("/search/{username}")
+    public ResponseEntity<List<User>> searchUser(@PathVariable String username) {
+        List<User> users = userRepository.findAllByUsernameContaining(username);
+        if (users == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(users);
+
     }
 }

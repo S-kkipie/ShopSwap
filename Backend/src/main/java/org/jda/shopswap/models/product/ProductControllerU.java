@@ -66,9 +66,14 @@ public class ProductControllerU {
         if (product == null) {
             return ResponseEntity.notFound().build();
         }
-        product.setReviews(product.getReviews() + 1);
-        product.setRating((product.getRating() + productReviewRequest.getRating()) / product.getReviews());
+        int currentReviews = product.getReviews();
+        double currentRating = product.getRating();
+        int newReviews = currentReviews + 1;
+        double newRating = (currentRating * currentReviews + productReviewRequest.getRating()) / newReviews;
+        product.setReviews(newReviews);
+        product.setRating(newRating);
         productRepository.save(product);
+
         return ResponseEntity.ok(product);
     }
 }

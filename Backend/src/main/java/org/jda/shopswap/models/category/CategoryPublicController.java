@@ -28,4 +28,12 @@ public class CategoryPublicController {
         }
         return ResponseEntity.ok(category);
     }
+    @GetMapping("/search/{name}")
+    public ResponseEntity<List<Category>> searchCategory(@PathVariable String name) {
+        List<Category> categories = categoryRepository.findAllByNameContaining(name);
+        if (categories == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(categories);
+    }
 }

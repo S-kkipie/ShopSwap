@@ -1,14 +1,122 @@
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
+const apiUrl = import.meta.env.VITE_BASE_URL;
 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button.tsx";
 import { useCookies } from "react-cookie";
 import { useAppSelector } from "@/store/hooks.ts";
+import { Product } from "@/Interfaces/Product";
+import { useState } from "react";
+import { Category } from "@/Interfaces/Category";
+import User from "@/Interfaces/User";
+import { Separator } from "./ui/separator";
 
 function GeneralNav() {
     const { isAuth } = useAppSelector((state) => state.authReducer);
+    const [products, setProducts] = useState<Product[]>([]);
+    const [categories, setCategories] = useState<Category[]>([]);
+    const [users, setUsers] = useState<User[]>([]);
+    function handleSearch(e: any) {
+        e.preventDefault();
+        if (e.target.value === "") {
+            setProducts([]);
+            setCategories([]);
+            setUsers([]);
+            return;
+        }
+        const fetchSearch = async () => {
+            const response = await fetch(apiUrl + "/public/models/product/search/" + e.target.value);
+            if (response.ok) {
+                const data = await response.json();
+                setProducts(data);
+            }
+            const response2 = await fetch(apiUrl + "/public/models/category/search/" + e.target.value);
+            if (response2.ok) {
+                const data = await response2.json();
+                setCategories(data);
+            }
+            const response3 = await fetch(apiUrl + "/public/models/user/search/" + e.target.value);
+            if (response3.ok) {
+                const data = await response3.json();
+                console.log(data);
+                setUsers(data);
+            }
+        };
+        fetchSearch();
+        //TODO
+    }
+    function SearchResult({ products, categories, users }: { products: Product[]; categories: Category[]; users: User[] }) {
+        function handleLinkClick() {
+            setProducts([]);
+            setCategories([]);
+            setUsers([]);
+        }
+        return (
+            <div className="z-10 absolute border-x w-full rounded shadow-lg bg-muted">
+                {products.length > 0 && (
+                    <div>
+                        <p className="text-sm font-semibold px-2 py-1">Productos: </p>
+                        {products.map((product: Product) => {
+                            return (
+                                <div className="px-5 py-1  transition-all hover:bg-white hover:text-black" key={product.id}>
+                                    <Link onClick={handleLinkClick} to={"/product/" + product.id}>
+                                        <div className="flex gap-3 items-center justify-between">
+                                            <div className="flex gap-3 items-center">
+                                                <img className="w-10" src={product.imgUrl} alt={product.name} />
+                                                <h1>{product.name}</h1>
+                                            </div>
+                                            <p>${product.price}</p>
+                                        </div>
+                                    </Link>
+                                </div>
+                            );
+                        })}
+                    </div>
+                )}
+                <Separator className="my-2"/>
+                {categories.length > 0 && (
+                    <div>
+                        <p className="text-sm font-semibold px-2 py-1">Categorias: </p>
+                        {categories.map((category: Category) => {
+                            return (
+                                <div className="px-5 py-1  transition-all hover:bg-white hover:text-black" key={category.id}>
+                                    <Link onClick={handleLinkClick} to={"/category/" + category.id}>
+                                        <div className="flex gap-3 items-center justify-between">
+                                            <div className="flex gap-3 items-center">
+                                                <h1>{category.name}</h1>
+                                            </div>
+                                        </div>
+                                    </Link>
+                                </div>
+                            );
+                        })}
+                    </div>
+                )}
+                <Separator className="my-2"/>
+
+                {users.length > 0 && (
+                    <div>
+                        <p className="text-sm font-semibold px-2 py-1">Usuarios: </p>
+                        {users.map((user: User) => {
+                            return (
+                                <div className="px-5 py-1  transition-all hover:bg-white hover:text-black" key={user.id}>
+                                    <Link onClick={handleLinkClick} to={"/user/" + user.id}>
+                                        <div className="flex gap-3 items-center justify-between">
+                                            <div className="flex gap-3 items-center">
+                                                <h1>{user.username}</h1>
+                                            </div>
+                                        </div>
+                                    </Link>
+                                </div>
+                            );
+                        })}
+                    </div>
+                )}
+            </div>
+        );
+    }
     return (
         <nav className="flex gap-4 bg-white shadow-lg  justify-around items-center py-6">
             <Link to="/">
@@ -29,11 +137,15 @@ function GeneralNav() {
                 </Link>
             </div>
             <div className="hidden lg:flex w-1/3 lg:gap-5">
-                {
-                    //TODO add search functionality
-                }
-                <Input placeholder="Busca productos, marcas y mas..." />
-                <Button>Buscar</Button>
+                <div className="w-full relative">
+                    <Input placeholder="Busca productos, marcas y mas..." onChange={handleSearch} />
+                    {
+                        users.length > 0 || products.length > 0 || categories.length > 0 ? (
+                            <SearchResult products={products} categories={categories} users={users} />
+                        ) : null
+                    }
+
+                </div>
             </div>
             {isAuth ? <DropDownUser /> : <LoginOrRegister />}
         </nav>
