@@ -29,7 +29,7 @@ function Checkout() {
             total += product.product.price * product.quantity;
         });
         setAmount(total);
-    }, [cart.products]);
+    }, []);
     const handlePlaceOrder = () => {
         const products = cart.products.map((product: any) => ({
             productId: product.product.id,

@@ -12,6 +12,7 @@ import { useState } from "react";
 import { Category } from "@/Interfaces/Category";
 import User from "@/Interfaces/User";
 import { Separator } from "./ui/separator";
+import { DoubleArrowDownIcon } from "@radix-ui/react-icons";
 
 function GeneralNav() {
     const { isAuth } = useAppSelector((state) => state.authReducer);
@@ -75,7 +76,7 @@ function GeneralNav() {
                         })}
                     </div>
                 )}
-                <Separator className="my-2"/>
+                <Separator className="my-2" />
                 {categories.length > 0 && (
                     <div>
                         <p className="text-sm font-semibold px-2 py-1">Categorias: </p>
@@ -94,7 +95,7 @@ function GeneralNav() {
                         })}
                     </div>
                 )}
-                <Separator className="my-2"/>
+                <Separator className="my-2" />
 
                 {users.length > 0 && (
                     <div>
@@ -122,6 +123,7 @@ function GeneralNav() {
             <Link to="/">
                 <h1 className="text-3xl font-bold text-primary">ShopSwap</h1>
             </Link>
+
             <div className="hidden md:flex gap-8 ">
                 {
                     //TODO add info pages
@@ -139,12 +141,7 @@ function GeneralNav() {
             <div className="hidden lg:flex w-1/3 lg:gap-5">
                 <div className="w-full relative">
                     <Input placeholder="Busca productos, marcas y mas..." onChange={handleSearch} />
-                    {
-                        users.length > 0 || products.length > 0 || categories.length > 0 ? (
-                            <SearchResult products={products} categories={categories} users={users} />
-                        ) : null
-                    }
-
+                    {users.length > 0 || products.length > 0 || categories.length > 0 ? <SearchResult products={products} categories={categories} users={users} /> : null}
                 </div>
             </div>
             {isAuth ? <DropDownUser /> : <LoginOrRegister />}
@@ -175,9 +172,12 @@ function DropDownUser() {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger className="rounded-full">
-                <Avatar>
-                    <AvatarImage src={userData?.picture ? userData!.picture : "https://w7.pngwing.com/pngs/578/405/png-transparent-user-person-profile-avatar-man-male-human-login-username-people.png"} />
-                </Avatar>
+                <div className="flex items-center gap-2">
+                    <Avatar>
+                        <AvatarImage src={userData?.picture ? userData!.picture : "https://w7.pngwing.com/pngs/578/405/png-transparent-user-person-profile-avatar-man-male-human-login-username-people.png"} />
+                    </Avatar>
+                    <DoubleArrowDownIcon className="w-5 h-5" />
+                </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>

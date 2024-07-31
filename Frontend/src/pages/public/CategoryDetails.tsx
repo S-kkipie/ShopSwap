@@ -2,7 +2,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { Category } from "@/Interfaces/Category";
 import { Product } from "@/Interfaces/Product";
 import { useEffect, useState } from "react";
-import {  useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import CarouselProducts from "@/components/CarouselProducts";
 import { Separator } from "@/components/ui/separator";
@@ -65,21 +65,31 @@ function CategoryDetails() {
             </Breadcrumb>
             <h1 className="text-5xl text-primary font-bold flex items-center">{categoria?.name}</h1>
             <h6 className="mb-8 mt-3">{categoria?.description}</h6>
+            <Separator className="my-8" />
+
             <div>
-                <h1 className="text-2xl mb-8 text-primary font-bold flex items-center">
-                    <div className="bg-primary w-3 h-10 rounded mr-3"></div>Productos Recientes
-                </h1>
-                <div className="flex gap-8">
+                <div className="mx-24 my-12">
+                    <h1 className="text-2xl mb-8 text-primary font-bold flex items-center">
+                        <div className="bg-primary w-5 h-10 rounded mr-3"></div>Productos Recientes
+                    </h1>
                     <CarouselProducts products={products} />
                 </div>
-            </div>
-            <Separator className="my-8" />
-            <div>
-                <h1 className="text-2xl mb-8 text-primary font-bold flex items-center">
-                    <div className="bg-primary w-3 h-10 rounded mr-3"></div>Los mas valorados
-                </h1>
-                <div className="flex gap-8">
-                    <CarouselProducts products={products} />
+                <Separator className="my-8" />
+
+                <div className="mx-24 my-12">
+                    <h1 className="text-2xl mb-8 text-primary font-bold flex items-center">
+                        <div className="bg-primary w-5 h-10 rounded mr-3"></div>Productos mas vendidos
+                    </h1>
+                    <CarouselProducts products={products.filter((e) => e.sold > 10)} />
+                </div>
+                <Separator className="my-8" />
+
+                <div className="mx-24 my-12">
+                    <h1 className="text-2xl mb-8 text-primary font-bold flex items-center">
+                        <div className="bg-primary w-5 h-10 rounded mr-3"></div>Productos mas valorados
+                    </h1>
+
+                    <CarouselProducts products={products.filter((e) => (e.reviews ? e.reviews : 0) > 10)} />
                 </div>
             </div>
         </div>

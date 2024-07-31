@@ -76,11 +76,24 @@ function HomePage() {
                 <Separator className="h-auto mr-16" orientation="vertical" />
                 <CarouselShop />
             </div>
-            <div className="mx-36">
+            <div className="mx-24 my-12">
                 <h1 className="text-2xl mb-8 text-primary font-bold flex items-center">
                     <div className="bg-primary w-5 h-10 rounded mr-3"></div>Productos Recientes
                 </h1>
                 <CarouselProducts products={products} />
+            </div>
+            <div className="mx-24 my-12">
+                <h1 className="text-2xl mb-8 text-primary font-bold flex items-center">
+                    <div className="bg-primary w-5 h-10 rounded mr-3"></div>Productos mas vendidos
+                </h1>
+                <CarouselProducts products={products.filter((e) => e.sold > 10)} />
+            </div>
+            <div className="mx-24 my-12">
+                <h1 className="text-2xl mb-8 text-primary font-bold flex items-center">
+                    <div className="bg-primary w-5 h-10 rounded mr-3"></div>Productos mas valorados
+                </h1>
+
+                <CarouselProducts products={products.filter((e) => (e.reviews ? e.reviews : 0) > 10)} />
             </div>
         </div>
     );

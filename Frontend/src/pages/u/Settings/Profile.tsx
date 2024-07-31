@@ -116,14 +116,14 @@ function Profile() {
         dispatch(updateDataThunk({ ...values, accessToken: accessToken! }));
     }
     return (
-        <div className="lg:w-9/12 lg:h-[90%] p-8 lg:py-10 lg:px-20  bg-white/80 shadow-xl rounded-xl border">
+        <div className="lg:w-10/12 lg:h-[90%] p-8 lg:py-10 lg:px-20 relative bg-white/80 shadow-xl rounded-xl border">
             <h1 className="text-3xl font-bold mb-3">Configuracion de perfil</h1>
             <p className="text-sm">Así es como te verán los demás en el sitio.</p>
             <Separator className="my-5" orientation="horizontal" />
 
             <div className="w-full lg:h-full flex items-center">
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="flex h-5/6 flex-col flex-wrap gap-10 lg:gap-12 w-full">
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="flex h-5/6 flex-col flex-wrap gap-10 lg:gap- w-full">
                         <FormField
                             control={form.control}
                             name="username"
@@ -302,11 +302,8 @@ function Profile() {
                         />
                         <Separator className="w-full lg:w-5/12" orientation="horizontal" />
                         <div className="flex gap-5">
-                            <Button className="mb-8" variant="outline" type="submit">
+                            <Button className="mb-8 absolute top-16 right-16" variant="outline" type="submit">
                                 Actualizar Perfil
-                            </Button>
-                            <Button type="button" variant="destructive">
-                                Desactivar Cuenta
                             </Button>
                         </div>
                     </form>
