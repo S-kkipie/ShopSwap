@@ -1,7 +1,6 @@
 const apiUrl = import.meta.env.VITE_BASE_URL;
 import CarouselProducts from "@/components/CarouselProducts";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/components/ui/use-toast";
 import { ShoppingOrder } from "@/Interfaces/ShoppingOrder";
 import { useAppSelector } from "@/store/hooks";
