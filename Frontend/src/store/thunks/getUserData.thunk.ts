@@ -17,12 +17,11 @@ export const getUserDataThunk = createAsyncThunk(
                     },
                 });
                 if (!response.ok) {
-                    const errorMessage = await response.text();
                     toast({
-                        description: errorMessage,
+                        description: "Hubo un error con la sesion, recarga la pagina",
                         variant: "destructive",
                     });
-                    return rejectWithValue(errorMessage);
+                    return rejectWithValue("Error fetching user data");
                 }
                 const data = await response.json();
                 return {
